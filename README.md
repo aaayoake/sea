@@ -74,6 +74,18 @@ sbatch sbatch/generate_dialogues.sbatch <SEEKER_JOB_ID> <SUPPORTER_JOB_ID>
 
 The script loads each job's `final` adapter and writes three fresh conversations to `eval_outputs/final_seeker_dialogues_<rollout-job-id>.jsonl`.
 
+### Generate conversations from validation scenarios
+
+To seed complete conversations with held-out ESConv problems and situations while letting the seeker model infer the emotion, submit:
+
+```bash
+sbatch sbatch/generate_val_conversations.sbatch <SEEKER_JOB_ID> <SUPPORTER_JOB_ID> [NUM_CONVERSATIONS]
+```
+
+The script samples 50 records by default from `esconv_val.json` (195 records in the current validation file). It gives the model only each record's problem category and situation for emotion inference; the original dialogue and reference emotion are not included in the prompts. The inferred emotion then conditions the seeker adapter while it generates the opening and subsequent seeker turns. The supporter adapter and newly generated dialogue are used for the alternating support turns. Each conversation has 8–12 supporter/seeker exchange rounds after the seeker's opening.
+
+Outputs are written to `eval_outputs/val_live_rollouts_<rollout-job-id>.jsonl` to avoid overwriting prior runs. Each record includes `inferred_emotion` and `reference_emotion` for optional emotion-inference analysis, plus the generated transcript. **Remove or hide `reference_emotion` and other source metadata before sending records to LLM judges** to keep their ratings blind. The original validation transcript is not copied into the output. These generated dialogues are alternative simulations of the scenarios, not expected replicas of the held-out human conversations.
+
 ## Evaluate
 
 The NRC evaluation reads the paired live transcripts and compares emotion-word frequencies and word counts for base-seeker and SFT-seeker responses. Because synthetic conversations do not have a human response target for each turn, this comparison does not claim human alignment or calculate human-reference Dice scores.

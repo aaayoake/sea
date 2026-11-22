@@ -5,8 +5,12 @@ dataset = load_dataset("thu-coai/esconv")
 
 # Inspect the structure and first training example
 print(dataset)
-print(dataset["train"][0])
+# print(dataset["train"][0])
 
-dataset["train"].to_json("esconv_train.json")
+# dataset["train"].to_json("esconv_train.json")
+
+print(dataset["validation"][0])
+
+dataset["validation"].to_json("esconv_val.json")
 # Or export to CSV:
 # dataset["train"].to_csv("esconv_train.csv", index=False)
