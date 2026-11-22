@@ -232,6 +232,12 @@ def main():
     parser.add_argument("--output-file", type=str, default="eval_outputs/live_rollouts.jsonl")
     parser.add_argument("--num-conversations", type=int, default=50)
     parser.add_argument(
+        "--seeker-mode",
+        choices=("paired", "sft", "base"),
+        default="paired",
+        help="Generate paired SFT/base seeker rollouts, or only one seeker variant",
+    )
+    parser.add_argument(
         "--min-turns",
         type=int,
         default=6,
@@ -297,20 +303,19 @@ def main():
         for idx, seed_info in enumerate(tqdm(seeds, desc="Running live rollouts")):
             num_turns = random.randint(args.min_turns, args.max_turns)
 
-            sft_transcript = simulate_conversation(
-                model, tokenizer, seed_info, num_turns, use_sft_seeker=True
-            )
-            base_transcript = simulate_conversation(
-                model, tokenizer, seed_info, num_turns, use_sft_seeker=False
-            )
-
             record = {
                 "id": idx,
                 "num_turns": num_turns,
                 "seed": seed_info,
-                "sft_seeker_transcript": sft_transcript,
-                "base_seeker_transcript": base_transcript,
             }
+            if args.seeker_mode in ("paired", "sft"):
+                record["sft_seeker_transcript"] = simulate_conversation(
+                    model, tokenizer, seed_info, num_turns, use_sft_seeker=True
+                )
+            if args.seeker_mode in ("paired", "base"):
+                record["base_seeker_transcript"] = simulate_conversation(
+                    model, tokenizer, seed_info, num_turns, use_sft_seeker=False
+                )
             out_f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
     print(f"Saved {len(seeds)} paired full conversations to {args.output_file}")

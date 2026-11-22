@@ -66,6 +66,14 @@ To supply your own scenario seeds, pass `--scenario-file path/to/scenarios.jsonl
 
 The output contains paired transcripts: the supporter adapter is used in both, while the seeker is generated once with the seeker adapter and once with the unadapted base model. This allows comparison of seeker fine-tuning while holding the supporter constant.
 
+To generate exactly three conversations using only the final seeker adapter (no base-seeker comparison), submit:
+
+```bash
+sbatch sbatch/generate_dialogues.sbatch <SEEKER_JOB_ID> <SUPPORTER_JOB_ID>
+```
+
+The script loads each job's `final` adapter and writes three fresh conversations to `eval_outputs/final_seeker_dialogues_<rollout-job-id>.jsonl`.
+
 ## Evaluate
 
 The NRC evaluation reads the paired live transcripts and compares emotion-word frequencies and word counts for base-seeker and SFT-seeker responses. Because synthetic conversations do not have a human response target for each turn, this comparison does not claim human alignment or calculate human-reference Dice scores.
