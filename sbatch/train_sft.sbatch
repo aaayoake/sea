@@ -16,15 +16,19 @@ if [[ "$ROLE" != "seeker" && "$ROLE" != "supporter" ]]; then
     exit 2
 fi
 
-cd "$(dirname "$0")/.."
+cd "${SLURM_SUBMIT_DIR:-$PWD}"
 
 export CONDA_PKGS_DIRS="$HOME/scratch/conda/pkgs"
 export HF_HOME="$HOME/scratch/hf_cache"
 mkdir -p "$CONDA_PKGS_DIRS" "$HF_HOME"
 
 module load anaconda3
-source "$(conda info --base)/etc/profile.d/conda.sh"
-conda activate sea
+ENV_PREFIX="${ENV_PREFIX:-$HOME/.conda/envs/sea}"
+PYTHON="$ENV_PREFIX/bin/python"
+if [[ ! -x "$PYTHON" ]]; then
+    echo "Python executable not found: $PYTHON (set ENV_PREFIX if the sea environment is elsewhere)" >&2
+    exit 2
+fi
 
 MODEL_ID="${MODEL_ID:-meta-llama/Llama-3.1-8B-Instruct}"
 export HF_HUB_OFFLINE=1
@@ -33,14 +37,14 @@ export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
 
 if [[ ! -f "esconv_train.json" ]]; then
-    echo "Missing local dataset esconv_train.json; copy it to the project directory first." >&2
+    echo "Missing local dataset: $(pwd)/esconv_train.json (submit from the project directory or set --chdir)" >&2
     exit 2
 fi
 
-python prepare_datasets.py
-python prepare_esconv_supporter.py
+"$PYTHON" prepare_datasets.py
+"$PYTHON" prepare_esconv_supporter.py
 
-python train_esconv_sft.py \
+"$PYTHON" train_esconv_sft.py \
     --role "$ROLE" \
     --model-id "$MODEL_ID" \
     --epochs 2 --batch-size 4 --grad-accum 4 --lr 1e-4 --max-seq-len 1536 --seed 42

@@ -33,7 +33,7 @@ sbatch sbatch/train_sft.sbatch seeker
 sbatch sbatch/train_sft.sbatch supporter
 ```
 
-The scripts set `CONDA_PKGS_DIRS` and `HF_HOME` to scratch, initialize Conda's shell functions, and activate the existing `sea` environment. They use the cached model ID `meta-llama/Llama-3.1-8B-Instruct` by default; override it with `MODEL_ID` if your cluster cache contains a different model. Hugging Face/Transformers are in offline mode, so the complete model must already be cached under the configured `HF_HOME`. The training script regenerates both role datasets from local `esconv_train.json`, validates the requested role, and trains that role's adapter using the custom PyTorch loop in `train_esconv_sft.py`.
+Submit the jobs from the project directory (the directory containing `esconv_train.json`). They use Slurm's `SLURM_SUBMIT_DIR` as the working directory, so the dataset is found even though Slurm executes a staged copy of the batch script. The scripts set `CONDA_PKGS_DIRS` and `HF_HOME` to scratch and run Python directly from `$HOME/.conda/envs/sea/bin/python`, avoiding `conda activate` in the batch shell. If the environment is elsewhere, set `ENV_PREFIX` when submitting. They use the cached model ID `meta-llama/Llama-3.1-8B-Instruct` by default; override it with `MODEL_ID` if your cluster cache contains a different model. Hugging Face/Transformers are in offline mode, so the complete model must already be cached under the configured `HF_HOME`. The training script regenerates both role datasets from local `esconv_train.json`, validates the requested role, and trains that role's adapter using the custom PyTorch loop in `train_esconv_sft.py`.
 
 | Role | Training data | Adapter output |
 |---|---|---|

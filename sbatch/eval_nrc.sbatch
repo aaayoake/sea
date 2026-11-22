@@ -10,15 +10,19 @@
 
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+cd "${SLURM_SUBMIT_DIR:-$PWD}"
 
 export CONDA_PKGS_DIRS="$HOME/scratch/conda/pkgs"
 export HF_HOME="$HOME/scratch/hf_cache"
 mkdir -p "$CONDA_PKGS_DIRS" "$HF_HOME" eval_outputs
 
 module load anaconda3
-source "$(conda info --base)/etc/profile.d/conda.sh"
-conda activate sea
+ENV_PREFIX="${ENV_PREFIX:-$HOME/.conda/envs/sea}"
+PYTHON="$ENV_PREFIX/bin/python"
+if [[ ! -x "$PYTHON" ]]; then
+    echo "Python executable not found: $PYTHON (set ENV_PREFIX if the sea environment is elsewhere)" >&2
+    exit 2
+fi
 
 MODEL_ID="${MODEL_ID:-meta-llama/Llama-3.1-8B-Instruct}"
 export HF_HUB_OFFLINE=1
@@ -27,7 +31,7 @@ export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
 
 # 1. Generate paired conversations from fresh synthetic scenarios.
-python run_live_rollouts.py \
+"$PYTHON" run_live_rollouts.py \
     --model-id "$MODEL_ID" \
     --seeker-adapter "checkpoints/esconv_seeker_sft/best" \
     --supporter-adapter "checkpoints/esconv_supporter_sft/best" \
@@ -39,6 +43,6 @@ python run_live_rollouts.py \
 
 # 2. Compare NRC emotion profiles for base-seeker and SFT-seeker rollouts.
 # Live rollouts have no human target, so this reports frequencies, not human-alignment Dice scores.
-python eval_nrc.py \
+"$PYTHON" eval_nrc.py \
     --input-file "eval_outputs/live_rollouts.jsonl" \
     --report-file "eval_outputs/nrc_eval_report.json"
