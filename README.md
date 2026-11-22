@@ -88,7 +88,7 @@ Outputs are written to `eval_outputs/val_live_rollouts_<rollout-job-id>.jsonl` t
 
 ## Evaluate
 
-The NRC evaluation reads the paired live transcripts and compares emotion-word frequencies and word counts for base-seeker and SFT-seeker responses. Because synthetic conversations do not have a human response target for each turn, this comparison does not claim human alignment or calculate human-reference Dice scores.
+The NRC evaluation reads paired live transcripts and compares emotion-word frequencies and word counts for base-seeker and SFT-seeker responses. It also accepts validation-seeded rollouts containing only `sft_seeker_transcript`; for these, it reports NRC frequencies and word counts for SFT seeker turns only, without requiring or inventing a base-seeker comparison. Because generated conversations are alternatives rather than reference transcripts, these profiles are descriptive and do not claim human alignment.
 
 NRC scoring only needs the generated JSONL and runs on CPU. To score an existing paired rollout without loading a model or requesting a GPU, submit:
 
@@ -116,6 +116,18 @@ python eval_nrc.py \
 ```
 
 Alternatively, set `NRC_LEXICON_PATH` to that file path; the Python evaluator and CPU Slurm script both honor it.
+
+For validation-seeded rollouts, pass the validation JSONL as a reference file to compare generated seeker NRC frequencies with the matching human seeker transcripts and to report inferred-emotion accuracy against the dataset labels:
+
+```bash
+python eval_nrc.py \
+  --input-file eval_outputs/val_live_rollouts_<rollout-job-id>.jsonl \
+  --reference-file esconv_val.json \
+  --report-file eval_outputs/nrc_val_report.json \
+  --lexicon-path /path/to/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt
+```
+
+The comparison matches by `source_index`, checks that the problem and situation match the referenced validation record, and uses only `usr` turns from the human dialogue. NRC Dice scores compare pooled emotion-word frequencies; they are descriptive and do not assess transcript-level semantic equivalence. Emotion-label accuracy is reported separately. The same reference comparison is available in the CPU Slurm script by passing `esconv_val.json` as its third argument.
 
 ## Dependencies and runtime
 
