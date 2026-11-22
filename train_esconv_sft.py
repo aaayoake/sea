@@ -2,6 +2,7 @@ import argparse
 import json
 import math
 import os
+import time
 import torch
 from datasets import Dataset
 from peft import LoraConfig, get_peft_model
@@ -194,6 +195,11 @@ def train_loop(
     optimizer.zero_grad()
 
     for epoch in range(epochs):
+        epoch_started = time.monotonic()
+        print(
+            f"Starting epoch {epoch + 1}/{epochs} with {len(train_loader)} batches",
+            flush=True,
+        )
         for step, batch in enumerate(train_loader):
             outputs = model(**batch)
             loss = outputs.loss / grad_accum_steps
@@ -205,21 +211,26 @@ def train_loop(
                 scheduler.step()
                 optimizer.zero_grad()
 
-            if step % 50 == 0:
+            if step % 10 == 0:
                 print(
-                    f"Epoch {epoch + 1}/{epochs} | Step {step}/{len(train_loader)} "
-                    f"| Train Loss: {loss.item() * grad_accum_steps:.4f}"
+                    f"Epoch {epoch + 1}/{epochs} | Step {step + 1}/{len(train_loader)} "
+                    f"| Train Loss: {loss.item() * grad_accum_steps:.4f} "
+                    f"| Elapsed: {time.monotonic() - epoch_started:.1f}s",
+                    flush=True,
                 )
 
         val_loss = evaluate(model, val_loader)
-        print(f"--> End of Epoch {epoch + 1} | Validation Loss: {val_loss:.4f}")
+        print(
+            f"--> End of Epoch {epoch + 1} | Validation Loss: {val_loss:.4f}",
+            flush=True,
+        )
 
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             best_dir = os.path.join(checkpoint_dir, "best")
             model.save_pretrained(best_dir)
             tokenizer.save_pretrained(best_dir)
-            print(f"Saved new best adapter to {best_dir}")
+            print(f"Saved new best adapter to {best_dir}", flush=True)
 
 
 def main():

@@ -35,6 +35,7 @@ export HF_DATASETS_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+export PYTHONUNBUFFERED=1
 
 if [[ ! -d "$HF_HOME" ]]; then
     echo "Shared Hugging Face cache is not accessible: $HF_HOME" >&2
@@ -58,7 +59,7 @@ for dataset_file in "$TRAIN_FILE" "$VAL_FILE"; do
     fi
 done
 
-"$PYTHON" train_esconv_sft.py \
+"$PYTHON" -u train_esconv_sft.py \
     --role "$ROLE" \
     --checkpoint-dir "$CHECKPOINT_DIR" \
     --model-id "$MODEL_ID" \
