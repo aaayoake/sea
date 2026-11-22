@@ -22,7 +22,6 @@ export CONDA_PKGS_DIRS="$HOME/scratch/conda/pkgs"
 export HF_HOME="$HOME/scratch/hf_cache"
 mkdir -p "$CONDA_PKGS_DIRS" "$HF_HOME"
 
-module load anaconda3
 ENV_PREFIX="${ENV_PREFIX:-$HOME/.conda/envs/sea}"
 PYTHON="$ENV_PREFIX/bin/python"
 if [[ ! -x "$PYTHON" ]]; then
