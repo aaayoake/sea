@@ -26,6 +26,8 @@ Both preprocessors use the same deterministic dialogue-level train/validation sp
 
 ## Train adapters
 
+Prepare the role-specific files once before training. Training jobs only read these files and check that the selected role's train and validation files exist; they do not rewrite them.
+
 Submit one Slurm job per role:
 
 ```bash
@@ -33,7 +35,9 @@ sbatch sbatch/train_sft.sbatch seeker
 sbatch sbatch/train_sft.sbatch supporter
 ```
 
-Submit the jobs from the project directory (the directory containing `esconv_train.json`). They use Slurm's `SLURM_SUBMIT_DIR` as the working directory, so the dataset is found even though Slurm executes a staged copy of the batch script. The scripts set `CONDA_PKGS_DIRS` to scratch and set `HF_HOME` to the course's shared, read-only model cache (`/storage/ice1/0/4/lheck6/CS6604_ECE6256/hf_cache`). They run Python directly from `$HOME/.conda/envs/sea/bin/python`, avoiding Conda activation in the batch shell. If the environment is elsewhere, set `ENV_PREFIX` when submitting. The cached model ID is `meta-llama/Llama-3.1-8B-Instruct` by default; override it with `MODEL_ID` if needed. Hugging Face/Transformers are in offline mode. Training uses SDPA attention, gradient checkpointing, a micro-batch of 1, and accumulation over 16 batches to reduce GPU memory use. The training script regenerates both role datasets from local `esconv_train.json`, validates the requested role, and trains that role's adapter using the custom PyTorch loop in `train_esconv_sft.py`.
+Submit the jobs from the project directory (the directory containing `data/`). They use Slurm's `SLURM_SUBMIT_DIR` as the working directory. The scripts set `CONDA_PKGS_DIRS` to scratch and set `HF_HOME` to the course's shared, read-only model cache (`/storage/ice1/0/4/lheck6/CS6604_ECE6256/hf_cache`). They run Python directly from `$HOME/.conda/envs/sea/bin/python`, avoiding Conda activation in the batch shell. If the environment is elsewhere, set `ENV_PREFIX` when submitting. The cached model ID is `meta-llama/Llama-3.1-8B-Instruct` by default; override it with `MODEL_ID` if needed. Hugging Face/Transformers are in offline mode. Training uses SDPA attention, gradient checkpointing, a micro-batch of 1, and accumulation over 16 batches to reduce GPU memory use.
+
+The seeker and supporter jobs read separate prepared datasets and write to separate checkpoint directories, so they can be submitted at the same time. Slurm may queue one if there is not another available GPU.
 
 | Role | Training data | Adapter output |
 |---|---|---|

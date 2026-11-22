@@ -41,13 +41,21 @@ if [[ ! -d "$HF_HOME" ]]; then
     exit 2
 fi
 
-if [[ ! -f "esconv_train.json" ]]; then
-    echo "Missing local dataset: $(pwd)/esconv_train.json (submit from the project directory or set --chdir)" >&2
-    exit 2
+if [[ "$ROLE" == "seeker" ]]; then
+    TRAIN_FILE="data/esconv_sft_train.jsonl"
+    VAL_FILE="data/esconv_sft_val.jsonl"
+else
+    TRAIN_FILE="data/esconv_supporter_sft_train.jsonl"
+    VAL_FILE="data/esconv_supporter_sft_val.jsonl"
 fi
 
-"$PYTHON" prepare_datasets.py
-"$PYTHON" prepare_esconv_supporter.py
+for dataset_file in "$TRAIN_FILE" "$VAL_FILE"; do
+    if [[ ! -s "$dataset_file" ]]; then
+        echo "Missing or empty prepared dataset: $(pwd)/$dataset_file" >&2
+        echo "Run prepare_datasets.py and prepare_esconv_supporter.py once before submitting training jobs." >&2
+        exit 2
+    fi
+done
 
 "$PYTHON" train_esconv_sft.py \
     --role "$ROLE" \
