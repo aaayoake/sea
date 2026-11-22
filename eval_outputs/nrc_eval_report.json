@@ -1,0 +1,246 @@
+{
+  "overall": {
+    "n": 537,
+    "avg_words_per_turn": {
+      "human": null,
+      "base": 41.229050279329606,
+      "sft": 6.592178770949721
+    },
+    "base_mean_dice_vs_human": null,
+    "sft_mean_dice_vs_human": null,
+    "per_category_dice_vs_human": null,
+    "emotion_frequencies": {
+      "base": {
+        "anger": 0.012827461607949413,
+        "anticipation": 0.025925925925925925,
+        "disgust": 0.011517615176151762,
+        "fear": 0.015627822944896116,
+        "joy": 0.015401987353206865,
+        "sadness": 0.018157181571815718,
+        "surprise": 0.014453477868112014,
+        "trust": 0.022854561878952122,
+        "positive": 0.03581752484191508,
+        "negative": 0.026016260162601626
+      },
+      "sft": {
+        "anger": 0.0096045197740113,
+        "anticipation": 0.02711864406779661,
+        "disgust": 0.005367231638418079,
+        "fear": 0.012429378531073447,
+        "joy": 0.019491525423728815,
+        "sadness": 0.016101694915254237,
+        "surprise": 0.013559322033898305,
+        "trust": 0.029943502824858758,
+        "positive": 0.04858757062146893,
+        "negative": 0.02344632768361582
+      }
+    },
+    "top_matched_words": {
+      "human": [],
+      "base": [
+        [
+          "time",
+          102
+        ],
+        [
+          "talk",
+          76
+        ],
+        [
+          "guess",
+          61
+        ],
+        [
+          "feeling",
+          55
+        ],
+        [
+          "start",
+          49
+        ],
+        [
+          "lose",
+          38
+        ],
+        [
+          "good",
+          36
+        ],
+        [
+          "friend",
+          33
+        ],
+        [
+          "motion",
+          27
+        ],
+        [
+          "worried",
+          25
+        ],
+        [
+          "constantly",
+          25
+        ],
+        [
+          "kind",
+          24
+        ],
+        [
+          "honest",
+          22
+        ],
+        [
+          "change",
+          21
+        ],
+        [
+          "bad",
+          21
+        ],
+        [
+          "explain",
+          16
+        ],
+        [
+          "scar",
+          15
+        ],
+        [
+          "plan",
+          15
+        ],
+        [
+          "long",
+          15
+        ],
+        [
+          "worry",
+          15
+        ],
+        [
+          "struggle",
+          14
+        ],
+        [
+          "expectation",
+          14
+        ],
+        [
+          "thought",
+          14
+        ],
+        [
+          "job",
+          14
+        ],
+        [
+          "weight",
+          14
+        ]
+      ],
+      "sft": [
+        [
+          "good",
+          20
+        ],
+        [
+          "talk",
+          17
+        ],
+        [
+          "job",
+          16
+        ],
+        [
+          "time",
+          16
+        ],
+        [
+          "friend",
+          13
+        ],
+        [
+          "balance",
+          7
+        ],
+        [
+          "afraid",
+          7
+        ],
+        [
+          "expect",
+          7
+        ],
+        [
+          "change",
+          5
+        ],
+        [
+          "tough",
+          5
+        ],
+        [
+          "struggle",
+          4
+        ],
+        [
+          "feeling",
+          4
+        ],
+        [
+          "anxious",
+          4
+        ],
+        [
+          "guilty",
+          4
+        ],
+        [
+          "worried",
+          4
+        ],
+        [
+          "relative",
+          4
+        ],
+        [
+          "interested",
+          4
+        ],
+        [
+          "mother",
+          4
+        ],
+        [
+          "routine",
+          3
+        ],
+        [
+          "money",
+          3
+        ],
+        [
+          "choice",
+          3
+        ],
+        [
+          "team",
+          3
+        ],
+        [
+          "nervous",
+          3
+        ],
+        [
+          "catch",
+          3
+        ],
+        [
+          "brother",
+          3
+        ]
+      ]
+    }
+  }
+}
