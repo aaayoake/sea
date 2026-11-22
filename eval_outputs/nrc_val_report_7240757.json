@@ -1,0 +1,416 @@
+{
+  "overall": {
+    "n": 152,
+    "avg_words_per_turn": {
+      "human": null,
+      "base": null,
+      "sft": 7.157894736842105
+    },
+    "base_mean_dice_vs_human": null,
+    "sft_mean_dice_vs_human": null,
+    "per_category_dice_vs_human": null,
+    "emotion_frequencies": {
+      "sft": {
+        "anger": 0.0055147058823529415,
+        "anticipation": 0.02849264705882353,
+        "disgust": 0.003676470588235294,
+        "fear": 0.012867647058823529,
+        "joy": 0.03125,
+        "sadness": 0.013786764705882353,
+        "surprise": 0.017463235294117647,
+        "trust": 0.03676470588235294,
+        "positive": 0.04963235294117647,
+        "negative": 0.017463235294117647
+      }
+    },
+    "top_matched_words": {
+      "human": [],
+      "sft": [
+        [
+          "good",
+          9
+        ],
+        [
+          "friend",
+          6
+        ],
+        [
+          "deal",
+          4
+        ],
+        [
+          "talk",
+          4
+        ],
+        [
+          "break",
+          3
+        ],
+        [
+          "advice",
+          3
+        ],
+        [
+          "pretty",
+          3
+        ],
+        [
+          "pay",
+          3
+        ],
+        [
+          "partner",
+          2
+        ],
+        [
+          "depress",
+          2
+        ],
+        [
+          "kind",
+          2
+        ],
+        [
+          "glad",
+          2
+        ],
+        [
+          "true",
+          2
+        ],
+        [
+          "mad",
+          2
+        ],
+        [
+          "start",
+          2
+        ],
+        [
+          "depressed",
+          2
+        ],
+        [
+          "watch",
+          2
+        ],
+        [
+          "sick",
+          1
+        ],
+        [
+          "time",
+          1
+        ],
+        [
+          "tired",
+          1
+        ],
+        [
+          "patient",
+          1
+        ],
+        [
+          "breakup",
+          1
+        ],
+        [
+          "focus",
+          1
+        ],
+        [
+          "reading",
+          1
+        ],
+        [
+          "job",
+          1
+        ]
+      ]
+    }
+  },
+  "validation_reference_comparison": {
+    "n_conversations": 15,
+    "n_generated_seeker_turns": 152,
+    "n_human_seeker_turns": 263,
+    "nrc": {
+      "generated_sft": {
+        "total_turns": 152,
+        "total_words": 1088,
+        "avg_words_per_turn": 7.157894736842105,
+        "freqs": {
+          "anger": 0.0055147058823529415,
+          "anticipation": 0.02849264705882353,
+          "disgust": 0.003676470588235294,
+          "fear": 0.012867647058823529,
+          "joy": 0.03125,
+          "sadness": 0.013786764705882353,
+          "surprise": 0.017463235294117647,
+          "trust": 0.03676470588235294,
+          "positive": 0.04963235294117647,
+          "negative": 0.017463235294117647
+        },
+        "top_matched_words": [
+          [
+            "good",
+            9
+          ],
+          [
+            "friend",
+            6
+          ],
+          [
+            "deal",
+            4
+          ],
+          [
+            "talk",
+            4
+          ],
+          [
+            "break",
+            3
+          ],
+          [
+            "advice",
+            3
+          ],
+          [
+            "pretty",
+            3
+          ],
+          [
+            "pay",
+            3
+          ],
+          [
+            "partner",
+            2
+          ],
+          [
+            "depress",
+            2
+          ],
+          [
+            "kind",
+            2
+          ],
+          [
+            "glad",
+            2
+          ],
+          [
+            "true",
+            2
+          ],
+          [
+            "mad",
+            2
+          ],
+          [
+            "start",
+            2
+          ],
+          [
+            "depressed",
+            2
+          ],
+          [
+            "watch",
+            2
+          ],
+          [
+            "sick",
+            1
+          ],
+          [
+            "time",
+            1
+          ],
+          [
+            "tired",
+            1
+          ],
+          [
+            "patient",
+            1
+          ],
+          [
+            "breakup",
+            1
+          ],
+          [
+            "focus",
+            1
+          ],
+          [
+            "reading",
+            1
+          ],
+          [
+            "job",
+            1
+          ]
+        ]
+      },
+      "human_reference": {
+        "total_turns": 263,
+        "total_words": 3676,
+        "avg_words_per_turn": 13.977186311787072,
+        "freqs": {
+          "anger": 0.014961915125136017,
+          "anticipation": 0.032100108813928184,
+          "disgust": 0.009521218715995648,
+          "fear": 0.01985854189336235,
+          "joy": 0.029923830250272034,
+          "sadness": 0.020946681175190423,
+          "surprise": 0.017410228509249184,
+          "trust": 0.03482045701849837,
+          "positive": 0.05032644178454842,
+          "negative": 0.03291621327529924
+        },
+        "top_matched_words": [
+          [
+            "friend",
+            20
+          ],
+          [
+            "good",
+            19
+          ],
+          [
+            "time",
+            12
+          ],
+          [
+            "job",
+            11
+          ],
+          [
+            "leave",
+            9
+          ],
+          [
+            "break",
+            8
+          ],
+          [
+            "kind",
+            8
+          ],
+          [
+            "advice",
+            8
+          ],
+          [
+            "pandemic",
+            7
+          ],
+          [
+            "worry",
+            7
+          ],
+          [
+            "talk",
+            7
+          ],
+          [
+            "start",
+            6
+          ],
+          [
+            "thought",
+            6
+          ],
+          [
+            "true",
+            6
+          ],
+          [
+            "bad",
+            6
+          ],
+          [
+            "partner",
+            5
+          ],
+          [
+            "pretty",
+            5
+          ],
+          [
+            "long",
+            5
+          ],
+          [
+            "problem",
+            4
+          ],
+          [
+            "guess",
+            4
+          ],
+          [
+            "cold",
+            4
+          ],
+          [
+            "happy",
+            3
+          ],
+          [
+            "contact",
+            3
+          ],
+          [
+            "learn",
+            3
+          ],
+          [
+            "excuse",
+            3
+          ]
+        ]
+      },
+      "per_category_dice": {
+        "anger": 53.86343655367784,
+        "anticipation": 94.0463811174383,
+        "disgust": 55.71385268263111,
+        "fear": 78.63822504736875,
+        "joy": 97.83212896053362,
+        "sadness": 79.3861038325319,
+        "surprise": 99.84800252373168,
+        "trust": 97.28400581200401,
+        "positive": 99.30562503752026,
+        "negative": 69.32682190856212
+      },
+      "mean_dice": 82.52445834759996
+    },
+    "emotion_label_comparison": {
+      "correct": 8,
+      "accuracy": 0.5333333333333333,
+      "per_reference_emotion": {
+        "anger": {
+          "n": 2,
+          "correct": 1,
+          "accuracy": 0.5
+        },
+        "anxiety": {
+          "n": 4,
+          "correct": 2,
+          "accuracy": 0.5
+        },
+        "depression": {
+          "n": 3,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "sadness": {
+          "n": 6,
+          "correct": 5,
+          "accuracy": 0.8333333333333334
+        }
+      }
+    }
+  }
+}
