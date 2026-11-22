@@ -17,6 +17,7 @@ if [[ "$ROLE" != "seeker" && "$ROLE" != "supporter" ]]; then
 fi
 
 module load anaconda3
+conda activate sea
 
 export HF_HOME=~/scratch/hf_cache
 export TOKENIZERS_PARALLELISM=false
