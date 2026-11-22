@@ -29,11 +29,11 @@ Both preprocessors use the same deterministic dialogue-level train/validation sp
 Submit one Slurm job per role:
 
 ```bash
-MODEL_PATH=/path/to/local/base-model sbatch sbatch/train_sft.sbatch seeker
-MODEL_PATH=/path/to/local/base-model sbatch sbatch/train_sft.sbatch supporter
+sbatch sbatch/train_sft.sbatch seeker
+sbatch sbatch/train_sft.sbatch supporter
 ```
 
-Set `MODEL_PATH` to the cluster-local directory containing the base model configuration, weights, tokenizer, and associated files. The batch scripts set Hugging Face/Transformers offline mode and pass this local path to the loader; they will not try to download the model. The script regenerates both role datasets from local `esconv_train.json`, validates the requested role, and trains that role's adapter using the custom PyTorch loop in `train_esconv_sft.py`.
+The scripts set `CONDA_PKGS_DIRS` and `HF_HOME` to scratch, initialize Conda's shell functions, and activate the existing `sea` environment. They use the cached model ID `meta-llama/Llama-3.1-8B-Instruct` by default; override it with `MODEL_ID` if your cluster cache contains a different model. Hugging Face/Transformers are in offline mode, so the complete model must already be cached under the configured `HF_HOME`. The training script regenerates both role datasets from local `esconv_train.json`, validates the requested role, and trains that role's adapter using the custom PyTorch loop in `train_esconv_sft.py`.
 
 | Role | Training data | Adapter output |
 |---|---|---|
@@ -45,13 +45,7 @@ Set `MODEL_PATH` to the cluster-local directory containing the base model config
 After both `best` adapters exist:
 
 ```bash
-python run_live_rollouts.py \
-  --model-path /path/to/local/base-model \
-  --seeker-adapter checkpoints/esconv_seeker_sft/best \
-  --supporter-adapter checkpoints/esconv_supporter_sft/best \
-  --num-conversations 50 \
-  --min-turns 8 \
-  --max-turns 12
+sbatch sbatch/eval_nrc.sbatch
 ```
 
 By default, the script creates fresh scenario seeds by combining topics, emotions, and original scenario descriptions defined in the rollout script. They are not selected from ESConv train or validation dialogues. The seeker adapter generates the opening message in its own words, then the supporter and seeker take turns. Each role receives the scenario instructions relevant to it and only the conversation generated so far. The supporter does not receive the seeker's private scenario/backstory, just as a real agent would not.

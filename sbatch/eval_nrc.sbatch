@@ -9,18 +9,18 @@
 #SBATCH --error=slurm-%x-%j.err
 
 set -euo pipefail
-mkdir -p slurm/logs eval_outputs
+
+cd "$(dirname "$0")/.."
+
+export CONDA_PKGS_DIRS="$HOME/scratch/conda/pkgs"
+export HF_HOME="$HOME/scratch/hf_cache"
+mkdir -p "$CONDA_PKGS_DIRS" "$HF_HOME" eval_outputs
 
 module load anaconda3
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate sea
 
-MODEL_PATH="${MODEL_PATH:?Set MODEL_PATH to the cluster-local base model directory}"
-if [[ ! -d "$MODEL_PATH" ]]; then
-    echo "MODEL_PATH is not a directory: $MODEL_PATH" >&2
-    exit 2
-fi
-
-export HF_HOME=~/scratch/hf_cache
+MODEL_ID="${MODEL_ID:-meta-llama/Llama-3.1-8B-Instruct}"
 export HF_HUB_OFFLINE=1
 export HF_DATASETS_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
@@ -28,7 +28,7 @@ export TOKENIZERS_PARALLELISM=false
 
 # 1. Generate paired conversations from fresh synthetic scenarios.
 python run_live_rollouts.py \
-    --model-path "$MODEL_PATH" \
+    --model-id "$MODEL_ID" \
     --seeker-adapter "checkpoints/esconv_seeker_sft/best" \
     --supporter-adapter "checkpoints/esconv_supporter_sft/best" \
     --output-file "eval_outputs/live_rollouts.jsonl" \

@@ -16,16 +16,17 @@ if [[ "$ROLE" != "seeker" && "$ROLE" != "supporter" ]]; then
     exit 2
 fi
 
+cd "$(dirname "$0")/.."
+
+export CONDA_PKGS_DIRS="$HOME/scratch/conda/pkgs"
+export HF_HOME="$HOME/scratch/hf_cache"
+mkdir -p "$CONDA_PKGS_DIRS" "$HF_HOME"
+
 module load anaconda3
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate sea
 
-MODEL_PATH="${MODEL_PATH:?Set MODEL_PATH to the cluster-local base model directory}"
-if [[ ! -d "$MODEL_PATH" ]]; then
-    echo "MODEL_PATH is not a directory: $MODEL_PATH" >&2
-    exit 2
-fi
-
-export HF_HOME=~/scratch/hf_cache
+MODEL_ID="${MODEL_ID:-meta-llama/Llama-3.1-8B-Instruct}"
 export HF_HUB_OFFLINE=1
 export HF_DATASETS_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
@@ -41,5 +42,5 @@ python prepare_esconv_supporter.py
 
 python train_esconv_sft.py \
     --role "$ROLE" \
-    --model-path "$MODEL_PATH" \
+    --model-id "$MODEL_ID" \
     --epochs 2 --batch-size 4 --grad-accum 4 --lr 1e-4 --max-seq-len 1536 --seed 42

@@ -217,10 +217,10 @@ def simulate_conversation(
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--model-path",
+        "--model-id",
         type=str,
-        required=True,
-        help="Path to a local base-model directory containing model and tokenizer files",
+        default="meta-llama/Llama-3.1-8B-Instruct",
+        help="Hugging Face model ID; files must already exist in the configured local cache",
     )
     parser.add_argument("--seeker-adapter", type=str, default="checkpoints/esconv_seeker_sft/best")
     parser.add_argument("--supporter-adapter", type=str, default="checkpoints/esconv_supporter_sft/best")
@@ -266,20 +266,18 @@ def main():
     seeds = scenarios[: args.num_conversations]
 
     # 2. Load Base Llama ONCE and attach both LoRA adapters
-    if not Path(args.model_path).is_dir():
-        raise FileNotFoundError(f"Local base-model directory does not exist: {args.model_path}")
     if not Path(args.seeker_adapter).is_dir():
         raise FileNotFoundError(f"Seeker adapter directory does not exist: {args.seeker_adapter}")
     if not Path(args.supporter_adapter).is_dir():
         raise FileNotFoundError(f"Supporter adapter directory does not exist: {args.supporter_adapter}")
 
-    print(f"Loading local base model {args.model_path}...")
-    tokenizer = AutoTokenizer.from_pretrained(args.model_path, local_files_only=True)
+    print(f"Loading cached base model {args.model_id}...")
+    tokenizer = AutoTokenizer.from_pretrained(args.model_id, local_files_only=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
     base_model = AutoModelForCausalLM.from_pretrained(
-        args.model_path,
+        args.model_id,
         torch_dtype=torch.bfloat16,
         device_map="auto",
         local_files_only=True,
