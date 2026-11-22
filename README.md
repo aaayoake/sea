@@ -31,25 +31,27 @@ Prepare the role-specific files once before training. Training jobs only read th
 Submit one Slurm job per role:
 
 ```bash
-sbatch sbatch/train_sft.sbatch seeker
-sbatch sbatch/train_sft.sbatch supporter
+SEEKER_JOB=$(sbatch --parsable sbatch/train_sft.sbatch seeker)
+SUPPORTER_JOB=$(sbatch --parsable sbatch/train_sft.sbatch supporter)
+echo "Seeker job: $SEEKER_JOB"
+echo "Supporter job: $SUPPORTER_JOB"
 ```
 
 Submit the jobs from the project directory (the directory containing `data/`). They use Slurm's `SLURM_SUBMIT_DIR` as the working directory. The scripts set `CONDA_PKGS_DIRS` to scratch and set `HF_HOME` to the course's shared, read-only model cache (`/storage/ice1/0/4/lheck6/CS6604_ECE6256/hf_cache`). They run Python directly from `$HOME/.conda/envs/sea/bin/python`, avoiding Conda activation in the batch shell. If the environment is elsewhere, set `ENV_PREFIX` when submitting. The cached model ID is `meta-llama/Llama-3.1-8B-Instruct` by default; override it with `MODEL_ID` if needed. Hugging Face/Transformers are in offline mode. Training uses SDPA attention, gradient checkpointing, a micro-batch of 1, and accumulation over 16 batches to reduce GPU memory use.
 
-The seeker and supporter jobs read separate prepared datasets and write to separate checkpoint directories, so they can be submitted at the same time. Slurm may queue one if there is not another available GPU.
+The seeker and supporter jobs read separate prepared datasets and write to separate checkpoint directories: `checkpoints/<job-id>/seeker/` and `checkpoints/<job-id>/supporter/`. This prevents a new training run from overwriting previous adapters, and the jobs can be submitted at the same time. Slurm may queue one if there is not another available GPU. Save the two job IDs printed above.
 
 | Role | Training data | Adapter output |
 |---|---|---|
-| `seeker` | `data/esconv_sft_train.jsonl`, `data/esconv_sft_val.jsonl` | `checkpoints/esconv_seeker_sft/` |
-| `supporter` | `data/esconv_supporter_sft_train.jsonl`, `data/esconv_supporter_sft_val.jsonl` | `checkpoints/esconv_supporter_sft/` |
+| `seeker` | `data/esconv_sft_train.jsonl`, `data/esconv_sft_val.jsonl` | `checkpoints/<seeker-job-id>/seeker/` |
+| `supporter` | `data/esconv_supporter_sft_train.jsonl`, `data/esconv_supporter_sft_val.jsonl` | `checkpoints/<supporter-job-id>/supporter/` |
 
 ## Generate complete conversations
 
-After both `best` adapters exist:
+After both training jobs complete successfully and their `best` adapters exist, pass their Slurm job IDs to evaluation:
 
 ```bash
-sbatch sbatch/eval_nrc.sbatch
+sbatch sbatch/eval_nrc.sbatch "$SEEKER_JOB" "$SUPPORTER_JOB"
 ```
 
 By default, the script creates fresh scenario seeds by combining topics, emotions, and original scenario descriptions defined in the rollout script. They are not selected from ESConv train or validation dialogues. The seeker adapter generates the opening message in its own words, then the supporter and seeker take turns. Each role receives the scenario instructions relevant to it and only the conversation generated so far. The supporter does not receive the seeker's private scenario/backstory, just as a real agent would not.

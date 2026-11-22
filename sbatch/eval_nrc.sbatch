@@ -10,6 +10,13 @@
 
 set -euo pipefail
 
+SEEKER_JOB_ID="${1:-}"
+SUPPORTER_JOB_ID="${2:-}"
+if [[ ! "$SEEKER_JOB_ID" =~ ^[0-9]+$ || ! "$SUPPORTER_JOB_ID" =~ ^[0-9]+$ ]]; then
+    echo "Usage: sbatch sbatch/eval_nrc.sbatch SEEKER_TRAIN_JOB_ID SUPPORTER_TRAIN_JOB_ID" >&2
+    exit 2
+fi
+
 cd "${SLURM_SUBMIT_DIR:-$PWD}"
 
 export CONDA_PKGS_DIRS="$HOME/scratch/conda/pkgs"
@@ -34,11 +41,20 @@ if [[ ! -d "$HF_HOME" ]]; then
     exit 2
 fi
 
+SEEKER_ADAPTER="checkpoints/${SEEKER_JOB_ID}/seeker/best"
+SUPPORTER_ADAPTER="checkpoints/${SUPPORTER_JOB_ID}/supporter/best"
+for adapter_dir in "$SEEKER_ADAPTER" "$SUPPORTER_ADAPTER"; do
+    if [[ ! -d "$adapter_dir" ]]; then
+        echo "Adapter checkpoint not found: $(pwd)/$adapter_dir" >&2
+        exit 2
+    fi
+done
+
 # 1. Generate paired conversations from fresh synthetic scenarios.
 "$PYTHON" run_live_rollouts.py \
     --model-id "$MODEL_ID" \
-    --seeker-adapter "checkpoints/esconv_seeker_sft/best" \
-    --supporter-adapter "checkpoints/esconv_supporter_sft/best" \
+    --seeker-adapter "$SEEKER_ADAPTER" \
+    --supporter-adapter "$SUPPORTER_ADAPTER" \
     --output-file "eval_outputs/live_rollouts.jsonl" \
     --num-conversations 50 \
     --min-turns 8 \

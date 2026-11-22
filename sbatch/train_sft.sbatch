@@ -48,6 +48,7 @@ else
     TRAIN_FILE="data/esconv_supporter_sft_train.jsonl"
     VAL_FILE="data/esconv_supporter_sft_val.jsonl"
 fi
+CHECKPOINT_DIR="checkpoints/${SLURM_JOB_ID:-manual}/${ROLE}"
 
 for dataset_file in "$TRAIN_FILE" "$VAL_FILE"; do
     if [[ ! -s "$dataset_file" ]]; then
@@ -59,5 +60,6 @@ done
 
 "$PYTHON" train_esconv_sft.py \
     --role "$ROLE" \
+    --checkpoint-dir "$CHECKPOINT_DIR" \
     --model-id "$MODEL_ID" \
     --epochs 2 --batch-size 1 --grad-accum 16 --lr 1e-4 --max-seq-len 1024 --seed 42
