@@ -34,6 +34,7 @@ export HF_HUB_OFFLINE=1
 export HF_DATASETS_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 if [[ ! -d "$HF_HOME" ]]; then
     echo "Shared Hugging Face cache is not accessible: $HF_HOME" >&2
@@ -51,4 +52,4 @@ fi
 "$PYTHON" train_esconv_sft.py \
     --role "$ROLE" \
     --model-id "$MODEL_ID" \
-    --epochs 2 --batch-size 4 --grad-accum 4 --lr 1e-4 --max-seq-len 1536 --seed 42
+    --epochs 2 --batch-size 1 --grad-accum 16 --lr 1e-4 --max-seq-len 1024 --seed 42

@@ -83,8 +83,13 @@ def build_model_and_tokenizer(model_id: str, rank: int, alpha: int, dropout: flo
         torch_dtype=torch.bfloat16,
         device_map="auto",
         local_files_only=True,
+        attn_implementation="sdpa",
     )
     model.config.use_cache = False
+    model.gradient_checkpointing_enable(
+        gradient_checkpointing_kwargs={"use_reentrant": False}
+    )
+    model.enable_input_require_grads()
 
     # Target all linear attention & MLP projections for strong behavioral adaptation
     lora_config = LoraConfig(
@@ -232,11 +237,11 @@ def main():
     parser.add_argument("--rank", type=int, default=16)
     parser.add_argument("--alpha", type=int, default=32)
     parser.add_argument("--dropout", type=float, default=0.05)
-    parser.add_argument("--batch-size", type=int, default=4)
-    parser.add_argument("--grad-accum", type=int, default=4)  # Effective batch size = 16
+    parser.add_argument("--batch-size", type=int, default=1)
+    parser.add_argument("--grad-accum", type=int, default=16)  # Effective batch size = 16
     parser.add_argument("--epochs", type=int, default=2)      # 2 epochs prevents backstory memorization
     parser.add_argument("--lr", type=float, default=1e-4)
-    parser.add_argument("--max-seq-len", type=int, default=1536)
+    parser.add_argument("--max-seq-len", type=int, default=1024)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
