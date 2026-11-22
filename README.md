@@ -90,6 +90,33 @@ Outputs are written to `eval_outputs/val_live_rollouts_<rollout-job-id>.jsonl` t
 
 The NRC evaluation reads the paired live transcripts and compares emotion-word frequencies and word counts for base-seeker and SFT-seeker responses. Because synthetic conversations do not have a human response target for each turn, this comparison does not claim human alignment or calculate human-reference Dice scores.
 
+NRC scoring only needs the generated JSONL and runs on CPU. To score an existing paired rollout without loading a model or requesting a GPU, submit:
+
+```bash
+sbatch sbatch/eval_nrc_report.sbatch [INPUT_JSONL] [REPORT_JSON]
+```
+
+By default, it reads `eval_outputs/live_rollouts.jsonl` and writes `eval_outputs/nrc_eval_report_<evaluation-job-id>.json`. For example:
+
+```bash
+sbatch sbatch/eval_nrc_report.sbatch \
+  eval_outputs/live_rollouts.jsonl \
+  eval_outputs/nrc_eval_report_existing-rollouts.json
+```
+
+This is separate from `sbatch/eval_nrc.sbatch`, which first generates new paired rollouts using the seeker and supporter adapters and therefore requests a GPU. The report JSON is saved under `eval_outputs/`; the Slurm `.out` file contains the printed summary and the report path.
+
+If the installed NRCLex package cannot find its bundled lexicon, provide the official NRC Word-Level Emotion Lexicon file explicitly. For a local run:
+
+```bash
+python eval_nrc.py \
+  --input-file eval_outputs/live_rollouts.jsonl \
+  --report-file eval_outputs/nrc_eval_report.json \
+  --lexicon-path /path/to/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt
+```
+
+Alternatively, set `NRC_LEXICON_PATH` to that file path; the Python evaluator and CPU Slurm script both honor it.
+
 ## Dependencies and runtime
 
 Install packages from `requirements.txt` in the cluster environment. The Slurm scripts assume jobs are submitted from the project directory, the local dataset and model directory are present, and training/rollout have a CUDA-capable GPU.

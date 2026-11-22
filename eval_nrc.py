@@ -1,7 +1,9 @@
 import argparse
 import json
+import os
 import re
 from collections import Counter, defaultdict
+from pathlib import Path
 import nltk
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
@@ -21,17 +23,32 @@ def load_nrc_lexicon(lexicon_path: str | None = None) -> dict[str, list[str]]:
     lexicon = defaultdict(list)
 
     if lexicon_path:
-        with open(lexicon_path, "r", encoding="utf-8") as f:
+        path = Path(lexicon_path)
+        if not path.is_file():
+            raise FileNotFoundError(
+                f"NRC lexicon file not found or is not a file: {path}. "
+                "Pass the official NRC-Emotion-Lexicon-Wordlevel-v0.92.txt file."
+            )
+        with path.open("r", encoding="utf-8") as f:
             for line in f:
                 parts = line.strip().split("\t")
                 if len(parts) == 3 and parts[2] == "1":
                     word, emotion = parts[0].lower(), parts[1].lower()
                     if emotion in NRC_CATEGORIES:
                         lexicon[word].append(emotion)
+        if not lexicon:
+            raise ValueError(f"No valid NRC emotion entries found in lexicon file: {path}")
     else:
         from nrclex import NRCLex
         # NRCLex stores its internal word -> [emotions] mapping on the class/instance
-        dummy = NRCLex("")
+        try:
+            dummy = NRCLex("")
+        except (IsADirectoryError, FileNotFoundError) as exc:
+            raise RuntimeError(
+                "NRCLex could not locate its bundled lexicon (it resolved a directory "
+                "instead of a lexicon file). Pass the official NRC lexicon explicitly "
+                "with --lexicon-path PATH or set NRC_LEXICON_PATH to that file."
+            ) from exc
         raw_dict = getattr(dummy, "__lexicon__", None) or getattr(NRCLex, "__lexicon__", None)
         if raw_dict is None:
             raise RuntimeError(
@@ -208,7 +225,15 @@ def normalize_live_rollouts(source_records: list[dict]) -> list[dict]:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-file", type=str, default="eval_outputs/esconv_val_generations.jsonl")
-    parser.add_argument("--lexicon-path", type=str, default=None, help="Path to NRC-Emotion-Lexicon-Wordlevel-v0.92.txt")
+    parser.add_argument(
+        "--lexicon-path",
+        type=str,
+        default=os.environ.get("NRC_LEXICON_PATH"),
+        help=(
+            "Path to NRC-Emotion-Lexicon-Wordlevel-v0.92.txt "
+            "(defaults to NRC_LEXICON_PATH when set)"
+        ),
+    )
     parser.add_argument("--report-file", type=str, default="eval_outputs/nrc_eval_report.json")
     args = parser.parse_args()
 
