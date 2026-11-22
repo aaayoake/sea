@@ -13,8 +13,8 @@ set -euo pipefail
 cd "${SLURM_SUBMIT_DIR:-$PWD}"
 
 export CONDA_PKGS_DIRS="$HOME/scratch/conda/pkgs"
-export HF_HOME="$HOME/scratch/hf_cache"
-mkdir -p "$CONDA_PKGS_DIRS" "$HF_HOME" eval_outputs
+export HF_HOME="/storage/ice1/0/4/lheck6/CS6604_ECE6256/hf_cache"
+mkdir -p "$CONDA_PKGS_DIRS" eval_outputs
 
 ENV_PREFIX="${ENV_PREFIX:-$HOME/.conda/envs/sea}"
 PYTHON="$ENV_PREFIX/bin/python"
@@ -28,6 +28,11 @@ export HF_HUB_OFFLINE=1
 export HF_DATASETS_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
+
+if [[ ! -d "$HF_HOME" ]]; then
+    echo "Shared Hugging Face cache is not accessible: $HF_HOME" >&2
+    exit 2
+fi
 
 # 1. Generate paired conversations from fresh synthetic scenarios.
 "$PYTHON" run_live_rollouts.py \
