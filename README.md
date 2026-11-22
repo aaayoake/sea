@@ -9,7 +9,7 @@ ESConv is used as role-specific SFT data. The training examples include precedin
 
 ## Prepare training data
 
-Download the ESConv dataset once:
+The cluster jobs expect the already-downloaded `esconv_train.json` file in the project directory. `download_datasets.py` is only for obtaining that file on a machine that can access Hugging Face; it is not run by the Slurm jobs.
 
 ```bash
 python download_datasets.py
@@ -29,11 +29,11 @@ Both preprocessors use the same deterministic dialogue-level train/validation sp
 Submit one Slurm job per role:
 
 ```bash
-sbatch sbatch/train_sft.sbatch seeker
-sbatch sbatch/train_sft.sbatch supporter
+MODEL_PATH=/path/to/local/base-model sbatch sbatch/train_sft.sbatch seeker
+MODEL_PATH=/path/to/local/base-model sbatch sbatch/train_sft.sbatch supporter
 ```
 
-The script regenerates both datasets, validates the requested role, and trains that role's adapter using the custom PyTorch training loop in `train_esconv_sft.py`.
+Set `MODEL_PATH` to the cluster-local directory containing the base model configuration, weights, tokenizer, and associated files. The batch scripts set Hugging Face/Transformers offline mode and pass this local path to the loader; they will not try to download the model. The script regenerates both role datasets from local `esconv_train.json`, validates the requested role, and trains that role's adapter using the custom PyTorch loop in `train_esconv_sft.py`.
 
 | Role | Training data | Adapter output |
 |---|---|---|
@@ -46,6 +46,7 @@ After both `best` adapters exist:
 
 ```bash
 python run_live_rollouts.py \
+  --model-path /path/to/local/base-model \
   --seeker-adapter checkpoints/esconv_seeker_sft/best \
   --supporter-adapter checkpoints/esconv_supporter_sft/best \
   --num-conversations 50 \
@@ -71,6 +72,6 @@ The NRC evaluation reads the paired live transcripts and compares emotion-word f
 
 ## Dependencies and runtime
 
-Install packages from `requirements.txt` in the cluster environment. The Slurm scripts assume jobs are submitted from the project directory, the base model is accessible, and training/rollout have a CUDA-capable GPU.
+Install packages from `requirements.txt` in the cluster environment. The Slurm scripts assume jobs are submitted from the project directory, the local dataset and model directory are present, and training/rollout have a CUDA-capable GPU.
 # sea
 # sea

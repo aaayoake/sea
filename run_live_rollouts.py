@@ -216,7 +216,12 @@ def simulate_conversation(
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-id", type=str, default="meta-llama/Llama-3.1-8B-Instruct")
+    parser.add_argument(
+        "--model-path",
+        type=str,
+        required=True,
+        help="Path to a local base-model directory containing model and tokenizer files",
+    )
     parser.add_argument("--seeker-adapter", type=str, default="checkpoints/esconv_seeker_sft/best")
     parser.add_argument("--supporter-adapter", type=str, default="checkpoints/esconv_supporter_sft/best")
     parser.add_argument(
@@ -261,20 +266,32 @@ def main():
     seeds = scenarios[: args.num_conversations]
 
     # 2. Load Base Llama ONCE and attach both LoRA adapters
-    print(f"Loading base model {args.model_id}...")
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
+    if not Path(args.model_path).is_dir():
+        raise FileNotFoundError(f"Local base-model directory does not exist: {args.model_path}")
+    if not Path(args.seeker_adapter).is_dir():
+        raise FileNotFoundError(f"Seeker adapter directory does not exist: {args.seeker_adapter}")
+    if not Path(args.supporter_adapter).is_dir():
+        raise FileNotFoundError(f"Supporter adapter directory does not exist: {args.supporter_adapter}")
+
+    print(f"Loading local base model {args.model_path}...")
+    tokenizer = AutoTokenizer.from_pretrained(args.model_path, local_files_only=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
     base_model = AutoModelForCausalLM.from_pretrained(
-        args.model_id,
+        args.model_path,
         torch_dtype=torch.bfloat16,
         device_map="auto",
+        local_files_only=True,
     )
 
     print("Attaching Seeker and Supporter LoRA adapters...")
-    model = PeftModel.from_pretrained(base_model, args.seeker_adapter, adapter_name="seeker")
-    model.load_adapter(args.supporter_adapter, adapter_name="supporter")
+    model = PeftModel.from_pretrained(
+        base_model, args.seeker_adapter, adapter_name="seeker", local_files_only=True
+    )
+    model.load_adapter(
+        args.supporter_adapter, adapter_name="supporter", local_files_only=True
+    )
     model.eval()
 
     # 3. Run paired live rollouts (SFT seeker vs. base seeker), both with the supporter adapter.

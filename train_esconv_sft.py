@@ -73,15 +73,19 @@ def build_sft_example(messages: list[dict], tokenizer, max_seq_len: int) -> dict
     }
 
 
-def build_model_and_tokenizer(model_id: str, rank: int, alpha: int, dropout: float):
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+def build_model_and_tokenizer(model_path: str, rank: int, alpha: int, dropout: float):
+    if not os.path.isdir(model_path):
+        raise FileNotFoundError(f"Local base-model directory does not exist: {model_path}")
+
+    tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
     model = AutoModelForCausalLM.from_pretrained(
-        model_id,
+        model_path,
         torch_dtype=torch.bfloat16,
         device_map="auto",
+        local_files_only=True,
     )
     model.config.use_cache = False
 
@@ -218,7 +222,12 @@ def train_loop(
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-id", type=str, default="meta-llama/Llama-3.1-8B-Instruct")
+    parser.add_argument(
+        "--model-path",
+        type=str,
+        required=True,
+        help="Path to a local base-model directory containing model and tokenizer files",
+    )
     parser.add_argument("--role", choices=("seeker", "supporter"), default="seeker")
     parser.add_argument("--train-file", type=str)
     parser.add_argument("--val-file", type=str)
@@ -244,7 +253,7 @@ def main():
     torch.manual_seed(args.seed)
 
     model, tokenizer = build_model_and_tokenizer(
-        args.model_id, args.rank, args.alpha, args.dropout
+        args.model_path, args.rank, args.alpha, args.dropout
     )
     train_ds = load_jsonl(args.train_file)
     val_ds = load_jsonl(args.val_file)

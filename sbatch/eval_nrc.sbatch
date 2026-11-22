@@ -14,12 +14,21 @@ mkdir -p slurm/logs eval_outputs
 module load anaconda3
 conda activate sea
 
+MODEL_PATH="${MODEL_PATH:?Set MODEL_PATH to the cluster-local base model directory}"
+if [[ ! -d "$MODEL_PATH" ]]; then
+    echo "MODEL_PATH is not a directory: $MODEL_PATH" >&2
+    exit 2
+fi
+
 export HF_HOME=~/scratch/hf_cache
+export HF_HUB_OFFLINE=1
+export HF_DATASETS_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
 
 # 1. Generate paired conversations from fresh synthetic scenarios.
 python run_live_rollouts.py \
-    --model-id "meta-llama/Llama-3.1-8B-Instruct" \
+    --model-path "$MODEL_PATH" \
     --seeker-adapter "checkpoints/esconv_seeker_sft/best" \
     --supporter-adapter "checkpoints/esconv_supporter_sft/best" \
     --output-file "eval_outputs/live_rollouts.jsonl" \
