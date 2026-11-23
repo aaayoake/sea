@@ -127,7 +127,7 @@ python eval_nrc.py \
   --lexicon-path /path/to/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt
 ```
 
-The comparison matches by `source_index`, checks that the problem and situation match the referenced validation record, and uses only `usr` turns from the human dialogue. NRC Dice scores compare pooled emotion-word frequencies; they are descriptive and do not assess transcript-level semantic equivalence. Emotion-label accuracy is reported separately. The same reference comparison is available in the CPU Slurm script by passing `esconv_val.json` as its third argument.
+The comparison matches by `source_index`, checks that the problem and situation match the referenced validation record, and uses only `usr` turns from the human dialogue. The report includes both pooled NRC frequencies and a `per_conversation` section with per-scenario NRC profiles, per-category/mean Dice, turn and word counts, and inferred-versus-reference emotion. NRC Dice scores compare emotion-word frequencies; they are descriptive and do not assess transcript-level semantic equivalence. Emotion-label accuracy is reported separately. The same reference comparison is available in the CPU Slurm script by passing `esconv_val.json` as its third argument.
 
 ## Dependencies and runtime
 

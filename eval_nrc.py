@@ -290,6 +290,7 @@ def evaluate_validation_references(
 
     generated_texts = []
     human_texts = []
+    per_conversation = []
     emotion_results = defaultdict(list)
     correct_emotions = 0
     seen_indices = set()
@@ -318,16 +319,18 @@ def evaluate_validation_references(
                 f"Rollout {source_index} situation does not match the validation reference"
             )
 
-        generated_texts.extend(
+        conversation_generated = [
             turn["content"]
             for turn in record["sft_seeker_transcript"]
             if turn.get("speaker") == "seeker" and turn.get("content", "").strip()
-        )
-        human_texts.extend(
+        ]
+        conversation_human = [
             turn["text"].strip()
             for turn in reference.get("dialog", [])
             if turn.get("speaker") == "usr" and turn.get("text", "").strip()
-        )
+        ]
+        generated_texts.extend(conversation_generated)
+        human_texts.extend(conversation_human)
 
         predicted = record.get("inferred_emotion")
         expected = reference.get("emotion_type")
@@ -340,6 +343,36 @@ def evaluate_validation_references(
         is_correct = predicted == expected
         emotion_results[expected].append(is_correct)
         correct_emotions += is_correct
+
+        generated_conversation_stats = compute_nrc_stats(
+            conversation_generated, lexicon, lemmatizer
+        )
+        human_conversation_stats = compute_nrc_stats(
+            conversation_human, lexicon, lemmatizer
+        )
+        conversation_dice = {
+            category: sorensen_dice(
+                generated_conversation_stats["freqs"][category],
+                human_conversation_stats["freqs"][category],
+            )
+            for category in NRC_CATEGORIES
+        }
+        per_conversation.append({
+            "source_index": source_index,
+            "problem": reference.get("problem_type"),
+            "situation": reference.get("situation"),
+            "emotion_label": {
+                "inferred": predicted,
+                "reference": expected,
+                "correct": is_correct,
+            },
+            "generated_sft": generated_conversation_stats,
+            "human_reference": human_conversation_stats,
+            "nrc": {
+                "per_category_dice": conversation_dice,
+                "mean_dice": sum(conversation_dice.values()) / len(NRC_CATEGORIES),
+            },
+        })
 
     if not seen_indices:
         raise ValueError("No validation rollout records were provided for comparison")
@@ -384,6 +417,7 @@ def evaluate_validation_references(
             "accuracy": accuracy,
             "per_reference_emotion": per_emotion,
         },
+        "per_conversation": per_conversation,
     }
 
 
