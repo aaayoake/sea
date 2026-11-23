@@ -1,23 +1,10 @@
 import argparse
 import json
 import random
-import re
 from pathlib import Path
 
 from prepare_esconv import load_local_esconv
 from run_live_rollouts import simulate_conversation
-
-EMOTION_LABELS = (
-    "anger",
-    "anxiety",
-    "depression",
-    "disgust",
-    "fear",
-    "nervousness",
-    "sadness",
-    "shame",
-)
-
 
 def select_validation_scenarios(
     input_file: str, num_conversations: int, seed: int
@@ -35,110 +22,29 @@ def select_validation_scenarios(
     for source_index, dialogue in enumerate(dialogues):
         problem = dialogue.get("problem_type")
         situation = dialogue.get("situation")
-        reference_emotion = dialogue.get("emotion_type")
         if not all(
             isinstance(value, str) and value.strip()
-            for value in (problem, situation, reference_emotion)
+            for value in (problem, situation)
         ):
             raise ValueError(
                 f"Validation record {source_index} must have non-empty "
-                "problem_type, situation, and emotion_type fields"
+                "problem_type and situation fields"
             )
         scenarios.append({
             "source_index": source_index,
             "problem": problem.strip(),
             "situation": situation.strip(),
-            "reference_emotion": reference_emotion.strip().lower(),
         })
 
     return random.Random(seed).sample(scenarios, num_conversations)
-
-
-def build_emotion_inference_messages(problem: str, situation: str) -> list[dict]:
-    labels = ", ".join(EMOTION_LABELS)
-    return [
-        {
-            "role": "system",
-            "content": (
-                "You are identifying the primary emotion a person may be experiencing "
-                "from a brief support-seeking scenario. Choose the single best-fitting "
-                f"label from this list: {labels}. Return exactly the label, with no "
-                "explanation."
-            ),
-        },
-        {
-            "role": "user",
-            "content": f"Problem category: {problem}\nSituation: {situation}",
-        },
-    ]
-
-
-def parse_inferred_emotion(response: str) -> str:
-    normalized_response = response.strip().lower()
-    matches = {
-        label
-        for label in EMOTION_LABELS
-        if re.search(rf"\b{re.escape(label)}\b", normalized_response)
-    }
-    if len(matches) != 1:
-        raise ValueError(
-            "Could not identify exactly one allowed emotion label in model response: "
-            f"{response!r}"
-        )
-    return matches.pop()
-
-
-def infer_emotion(model, tokenizer, problem: str, situation: str) -> str:
-    model.set_adapter("seeker")
-    prompt = tokenizer.apply_chat_template(
-        build_emotion_inference_messages(problem, situation),
-        tokenize=False,
-        add_generation_prompt=True,
-    )
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    prompt_length = inputs["input_ids"].shape[1]
-    candidate_tokens = {
-        label: tokenizer.encode(label, add_special_tokens=False)
-        for label in EMOTION_LABELS
-    }
-    if any(not tokens for tokens in candidate_tokens.values()):
-        raise RuntimeError("Tokenizer produced an empty token sequence for an emotion label")
-    if tokenizer.eos_token_id is None:
-        raise RuntimeError("Tokenizer must define eos_token_id for constrained emotion decoding")
-
-    def allowed_next_tokens(_batch_id, input_ids):
-        generated = input_ids[0, prompt_length:].tolist()
-        allowed = {
-            tokens[len(generated)]
-            for tokens in candidate_tokens.values()
-            if len(generated) < len(tokens) and tokens[:len(generated)] == generated
-        }
-        if any(tokens == generated for tokens in candidate_tokens.values()):
-            allowed.add(tokenizer.eos_token_id)
-        if not allowed:
-            raise RuntimeError(
-                f"Constrained emotion decoding reached an invalid token prefix: {generated}"
-            )
-        return sorted(allowed)
-
-    outputs = model.generate(
-        **inputs,
-        max_new_tokens=max(map(len, candidate_tokens.values())) + 1,
-        do_sample=False,
-        prefix_allowed_tokens_fn=allowed_next_tokens,
-        pad_token_id=tokenizer.pad_token_id,
-        eos_token_id=tokenizer.eos_token_id,
-    )
-    response = tokenizer.decode(outputs[0][prompt_length:], skip_special_tokens=True).strip()
-    return parse_inferred_emotion(response)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
             "Generate complete seeker/supporter conversations from ESConv validation "
-            "problems and situations, inferring the seeker's emotion without showing "
-            "the reference emotion or transcript to the model."
+            "problems and situations. The model simulates emotional reactions naturally "
+            "without predicting a dataset emotion label."
         )
     )
     parser.add_argument("--model-id", default="meta-llama/Llama-3.1-8B-Instruct")
@@ -195,12 +101,9 @@ def main() -> None:
 
     with open(args.output_file, "w", encoding="utf-8") as output_file:
         for scenario in tqdm(scenarios, desc="Generating validation rollouts"):
-            inferred_emotion = infer_emotion(
-                model, tokenizer, scenario["problem"], scenario["situation"]
-            )
             seed_info = {
                 "problem": scenario["problem"],
-                "emotion": inferred_emotion,
+                "emotion": None,
                 "situation": scenario["situation"],
             }
             num_turns = random.randint(args.min_turns, args.max_turns)
@@ -217,8 +120,6 @@ def main() -> None:
                 "num_turns": num_turns,
                 "problem": scenario["problem"],
                 "situation": scenario["situation"],
-                "inferred_emotion": inferred_emotion,
-                "reference_emotion": scenario["reference_emotion"],
                 "sft_seeker_transcript": transcript,
             }, ensure_ascii=False) + "\n")
             output_file.flush()

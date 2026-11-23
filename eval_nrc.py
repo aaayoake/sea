@@ -291,8 +291,6 @@ def evaluate_validation_references(
     generated_texts = []
     human_texts = []
     per_conversation = []
-    emotion_results = defaultdict(list)
-    correct_emotions = 0
     seen_indices = set()
 
     for record in source_records:
@@ -332,18 +330,6 @@ def evaluate_validation_references(
         generated_texts.extend(conversation_generated)
         human_texts.extend(conversation_human)
 
-        predicted = record.get("inferred_emotion")
-        expected = reference.get("emotion_type")
-        if not isinstance(predicted, str) or not isinstance(expected, str):
-            raise ValueError(
-                f"Rollout {source_index} is missing inferred or reference emotion"
-            )
-        expected = expected.strip().lower()
-        predicted = predicted.strip().lower()
-        is_correct = predicted == expected
-        emotion_results[expected].append(is_correct)
-        correct_emotions += is_correct
-
         generated_conversation_stats = compute_nrc_stats(
             conversation_generated, lexicon, lemmatizer
         )
@@ -361,11 +347,6 @@ def evaluate_validation_references(
             "source_index": source_index,
             "problem": reference.get("problem_type"),
             "situation": reference.get("situation"),
-            "emotion_label": {
-                "inferred": predicted,
-                "reference": expected,
-                "correct": is_correct,
-            },
             "generated_sft": generated_conversation_stats,
             "human_reference": human_conversation_stats,
             "nrc": {
@@ -386,21 +367,10 @@ def evaluate_validation_references(
         for category in NRC_CATEGORIES
     }
 
-    per_emotion = {}
-    for emotion in sorted(emotion_results):
-        emotion_records = emotion_results[emotion]
-        matched = sum(emotion_records)
-        per_emotion[emotion] = {
-            "n": len(emotion_records),
-            "correct": matched,
-            "accuracy": matched / len(emotion_records),
-        }
-
     mean_dice = sum(per_category_dice.values()) / len(NRC_CATEGORIES)
-    accuracy = correct_emotions / len(seen_indices)
     print(
         f"\nValidation reference comparison (n={len(seen_indices)}): "
-        f"mean NRC Dice={mean_dice:.2f}, emotion-label accuracy={accuracy:.3f}"
+        f"mean NRC Dice={mean_dice:.2f}"
     )
     return {
         "n_conversations": len(seen_indices),
@@ -411,11 +381,6 @@ def evaluate_validation_references(
             "human_reference": human_stats,
             "per_category_dice": per_category_dice,
             "mean_dice": mean_dice,
-        },
-        "emotion_label_comparison": {
-            "correct": correct_emotions,
-            "accuracy": accuracy,
-            "per_reference_emotion": per_emotion,
         },
         "per_conversation": per_conversation,
     }
@@ -430,7 +395,7 @@ def main():
         default=None,
         help=(
             "Optional ESConv validation JSONL. Matches source_index to compare generated "
-            "seeker NRC profiles and inferred emotion against human references."
+            "seeker NRC profiles against human seeker references."
         ),
     )
     parser.add_argument(

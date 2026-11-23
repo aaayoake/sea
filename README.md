@@ -76,15 +76,15 @@ The script loads each job's `final` adapter and writes three fresh conversations
 
 ### Generate conversations from validation scenarios
 
-To seed complete conversations with held-out ESConv problems and situations while letting the seeker model infer the emotion, submit:
+To seed complete conversations with held-out ESConv problems and situations while letting the seeker express feelings naturally, submit:
 
 ```bash
 sbatch sbatch/generate_val_conversations.sbatch <SEEKER_JOB_ID> <SUPPORTER_JOB_ID> [NUM_CONVERSATIONS]
 ```
 
-The script samples 50 records by default from `esconv_val.json` (195 records in the current validation file). It gives the model only each record's problem category and situation for emotion inference; the original dialogue and reference emotion are not included in the prompts. Emotion decoding is constrained to the eight labels present in the validation set, so an unsupported free-form answer cannot interrupt generation. The inferred emotion then conditions the seeker adapter while it generates the opening and subsequent seeker turns. The supporter adapter and newly generated dialogue are used for the alternating support turns. Each conversation has 8–12 supporter/seeker exchange rounds after the seeker's opening.
+The script samples 50 records by default from `esconv_val.json` (195 records in the current validation file). It gives the model only each record's problem category and situation; the original dialogue and emotion label are not included in generation. The seeker is not asked to predict or use a fixed emotion label; feelings can emerge naturally from the situation. The supporter adapter and newly generated dialogue are used for the alternating support turns. Each conversation has 8–12 supporter/seeker exchange rounds after the seeker's opening.
 
-Outputs are written to `eval_outputs/val_live_rollouts_<rollout-job-id>.jsonl` to avoid overwriting prior runs. Each record includes `inferred_emotion` and `reference_emotion` for optional emotion-inference analysis, plus the generated transcript. **Remove or hide `reference_emotion` and other source metadata before sending records to LLM judges** to keep their ratings blind. The original validation transcript is not copied into the output. These generated dialogues are alternative simulations of the scenarios, not expected replicas of the held-out human conversations.
+Outputs are written to `eval_outputs/val_live_rollouts_<rollout-job-id>.jsonl` to avoid overwriting prior runs. Each record contains the source index, problem, situation, and generated transcript, but no inferred or reference emotion label. The original validation transcript is not copied into the output. These generated dialogues are alternative simulations of the scenarios, not expected replicas of the held-out human conversations.
 
 ## Evaluate
 
@@ -117,7 +117,7 @@ python eval_nrc.py \
 
 Alternatively, set `NRC_LEXICON_PATH` to that file path; the Python evaluator and CPU Slurm script both honor it.
 
-For validation-seeded rollouts, pass the validation JSONL as a reference file to compare generated seeker NRC frequencies with the matching human seeker transcripts and to report inferred-emotion accuracy against the dataset labels:
+For validation-seeded rollouts, pass the validation JSONL as a reference file to compare generated seeker NRC frequencies with the matching human seeker transcripts:
 
 ```bash
 python eval_nrc.py \
@@ -127,7 +127,7 @@ python eval_nrc.py \
   --lexicon-path /path/to/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt
 ```
 
-The comparison matches by `source_index`, checks that the problem and situation match the referenced validation record, and uses only `usr` turns from the human dialogue. The report includes both pooled NRC frequencies and a `per_conversation` section with per-scenario NRC profiles, per-category/mean Dice, turn and word counts, and inferred-versus-reference emotion. NRC Dice scores compare emotion-word frequencies; they are descriptive and do not assess transcript-level semantic equivalence. Emotion-label accuracy is reported separately. The same reference comparison is available in the CPU Slurm script by passing `esconv_val.json` as its third argument.
+The comparison matches by `source_index`, checks that the problem and situation match the referenced validation record, and uses only `usr` turns from the human dialogue. The report includes pooled NRC frequencies and a `per_conversation` section with per-scenario NRC profiles, per-category/mean Dice, and turn and word counts. NRC Dice scores compare emotion-word frequencies; they are descriptive and do not assess transcript-level semantic equivalence. No emotion-label prediction or accuracy metric is used. The same reference comparison is available in the CPU Slurm script by passing `esconv_val.json` as its third argument.
 
 ## Dependencies and runtime
 

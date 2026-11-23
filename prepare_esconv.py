@@ -49,12 +49,18 @@ def merge_consecutive_turns(dialogue: dict) -> list[dict]:
     return merged
 
 
-def build_system_prompt(emotion: str, problem: str, situation: str) -> str:
+def build_system_prompt(emotion: str | None, problem: str, situation: str) -> str:
+    emotion_context = (
+        f"Primary Emotion: {emotion}\n"
+        if emotion
+        else "Emotional Experience: Let feelings emerge naturally from the situation; "
+        "do not assign or force a predefined emotion label.\n"
+    )
     return (
         "You are simulating a real human seeker of emotional support. "
         "Respond naturally as the person described; do not act as a counselor.\n"
         f"Problem Category: {problem}\n"
-        f"Primary Emotion: {emotion}\n"
+        f"{emotion_context}"
         f"Backstory (reveal gradually, do NOT dump all at once): {situation}\n"
         "Only share specific backstory details when directly prompted or relevant. "
         "Keep responses conversational, usually 1-2 short sentences. "
