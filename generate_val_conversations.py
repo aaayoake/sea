@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 from prepare_esconv import load_local_esconv
-from run_live_rollouts import generate_reply, simulate_conversation
+from run_live_rollouts import simulate_conversation
 
 EMOTION_LABELS = (
     "anger",
@@ -90,12 +90,46 @@ def parse_inferred_emotion(response: str) -> str:
 
 def infer_emotion(model, tokenizer, problem: str, situation: str) -> str:
     model.set_adapter("seeker")
-    response = generate_reply(
-        model,
-        tokenizer,
+    prompt = tokenizer.apply_chat_template(
         build_emotion_inference_messages(problem, situation),
-        max_new_tokens=16,
+        tokenize=False,
+        add_generation_prompt=True,
     )
+    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    prompt_length = inputs["input_ids"].shape[1]
+    candidate_tokens = {
+        label: tokenizer.encode(label, add_special_tokens=False)
+        for label in EMOTION_LABELS
+    }
+    if any(not tokens for tokens in candidate_tokens.values()):
+        raise RuntimeError("Tokenizer produced an empty token sequence for an emotion label")
+    if tokenizer.eos_token_id is None:
+        raise RuntimeError("Tokenizer must define eos_token_id for constrained emotion decoding")
+
+    def allowed_next_tokens(_batch_id, input_ids):
+        generated = input_ids[0, prompt_length:].tolist()
+        allowed = {
+            tokens[len(generated)]
+            for tokens in candidate_tokens.values()
+            if len(generated) < len(tokens) and tokens[:len(generated)] == generated
+        }
+        if any(tokens == generated for tokens in candidate_tokens.values()):
+            allowed.add(tokenizer.eos_token_id)
+        if not allowed:
+            raise RuntimeError(
+                f"Constrained emotion decoding reached an invalid token prefix: {generated}"
+            )
+        return sorted(allowed)
+
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=max(map(len, candidate_tokens.values())) + 1,
+        do_sample=False,
+        prefix_allowed_tokens_fn=allowed_next_tokens,
+        pad_token_id=tokenizer.pad_token_id,
+        eos_token_id=tokenizer.eos_token_id,
+    )
+    response = tokenizer.decode(outputs[0][prompt_length:], skip_special_tokens=True).strip()
     return parse_inferred_emotion(response)
 
 
