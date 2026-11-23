@@ -411,6 +411,2237 @@
           "accuracy": 0.8333333333333334
         }
       }
-    }
+    },
+    "per_conversation": [
+      {
+        "source_index": 163,
+        "problem": "breakup with partner",
+        "situation": "my partner broke up with me. i have no idea how am going to handle it.",
+        "emotion_label": {
+          "inferred": "sadness",
+          "reference": "sadness",
+          "correct": true
+        },
+        "generated_sft": {
+          "total_turns": 9,
+          "total_words": 53,
+          "avg_words_per_turn": 5.888888888888889,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.03773584905660377,
+            "disgust": 0.0,
+            "fear": 0.018867924528301886,
+            "joy": 0.05660377358490566,
+            "sadness": 0.018867924528301886,
+            "surprise": 0.05660377358490566,
+            "trust": 0.05660377358490566,
+            "positive": 0.07547169811320754,
+            "negative": 0.018867924528301886
+          },
+          "top_matched_words": [
+            [
+              "good",
+              2
+            ],
+            [
+              "partner",
+              1
+            ],
+            [
+              "break",
+              1
+            ],
+            [
+              "depress",
+              1
+            ],
+            [
+              "kind",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 21,
+          "total_words": 325,
+          "avg_words_per_turn": 15.476190476190476,
+          "freqs": {
+            "anger": 0.009230769230769232,
+            "anticipation": 0.03076923076923077,
+            "disgust": 0.003076923076923077,
+            "fear": 0.018461538461538463,
+            "joy": 0.03076923076923077,
+            "sadness": 0.015384615384615385,
+            "surprise": 0.024615384615384615,
+            "trust": 0.036923076923076927,
+            "positive": 0.06153846153846154,
+            "negative": 0.018461538461538463
+          },
+          "top_matched_words": [
+            [
+              "break",
+              3
+            ],
+            [
+              "learn",
+              3
+            ],
+            [
+              "good",
+              2
+            ],
+            [
+              "hurt",
+              2
+            ],
+            [
+              "time",
+              2
+            ],
+            [
+              "happy",
+              2
+            ],
+            [
+              "pandemic",
+              2
+            ],
+            [
+              "kind",
+              2
+            ],
+            [
+              "partner",
+              2
+            ],
+            [
+              "lie",
+              1
+            ],
+            [
+              "avoid",
+              1
+            ],
+            [
+              "system",
+              1
+            ],
+            [
+              "sudden",
+              1
+            ],
+            [
+              "daily",
+              1
+            ],
+            [
+              "contact",
+              1
+            ],
+            [
+              "medical",
+              1
+            ],
+            [
+              "assistance",
+              1
+            ],
+            [
+              "grateful",
+              1
+            ],
+            [
+              "word",
+              1
+            ],
+            [
+              "enjoy",
+              1
+            ],
+            [
+              "heal",
+              1
+            ],
+            [
+              "lucky",
+              1
+            ],
+            [
+              "hope",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 0.0,
+            "anticipation": 89.83050847457629,
+            "disgust": 0.0,
+            "fear": 98.9113530326594,
+            "joy": 70.43189368770764,
+            "sadness": 89.83050847457629,
+            "surprise": 60.61472480343103,
+            "trust": 78.95716945996276,
+            "positive": 89.83050847457629,
+            "negative": 98.9113530326594
+          },
+          "mean_dice": 67.7318019440149
+        }
+      },
+      {
+        "source_index": 28,
+        "problem": "ongoing depression",
+        "situation": "Coronavirus is making me very panicked about leaving the house and I'm almost scared to do anything these days.",
+        "emotion_label": {
+          "inferred": "fear",
+          "reference": "anxiety",
+          "correct": false
+        },
+        "generated_sft": {
+          "total_turns": 9,
+          "total_words": 58,
+          "avg_words_per_turn": 6.444444444444445,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.05172413793103448,
+            "disgust": 0.017241379310344827,
+            "fear": 0.0,
+            "joy": 0.05172413793103448,
+            "sadness": 0.017241379310344827,
+            "surprise": 0.034482758620689655,
+            "trust": 0.034482758620689655,
+            "positive": 0.05172413793103448,
+            "negative": 0.017241379310344827
+          },
+          "top_matched_words": [
+            [
+              "deal",
+              2
+            ],
+            [
+              "glad",
+              1
+            ],
+            [
+              "sick",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 12,
+          "total_words": 331,
+          "avg_words_per_turn": 27.583333333333332,
+          "freqs": {
+            "anger": 0.00906344410876133,
+            "anticipation": 0.045317220543806644,
+            "disgust": 0.006042296072507553,
+            "fear": 0.030211480362537766,
+            "joy": 0.00906344410876133,
+            "sadness": 0.03927492447129909,
+            "surprise": 0.01812688821752266,
+            "trust": 0.02416918429003021,
+            "positive": 0.04229607250755287,
+            "negative": 0.04229607250755287
+          },
+          "top_matched_words": [
+            [
+              "leave",
+              5
+            ],
+            [
+              "start",
+              4
+            ],
+            [
+              "worry",
+              3
+            ],
+            [
+              "thought",
+              2
+            ],
+            [
+              "watch",
+              2
+            ],
+            [
+              "manage",
+              2
+            ],
+            [
+              "time",
+              2
+            ],
+            [
+              "anxiety",
+              1
+            ],
+            [
+              "panic",
+              1
+            ],
+            [
+              "vaccine",
+              1
+            ],
+            [
+              "completely",
+              1
+            ],
+            [
+              "change",
+              1
+            ],
+            [
+              "fact",
+              1
+            ],
+            [
+              "sick",
+              1
+            ],
+            [
+              "partner",
+              1
+            ],
+            [
+              "provide",
+              1
+            ],
+            [
+              "scar",
+              1
+            ],
+            [
+              "frustration",
+              1
+            ],
+            [
+              "quiet",
+              1
+            ],
+            [
+              "build",
+              1
+            ],
+            [
+              "sense",
+              1
+            ],
+            [
+              "problem",
+              1
+            ],
+            [
+              "guidance",
+              1
+            ],
+            [
+              "friend",
+              1
+            ],
+            [
+              "deal",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 0.0,
+            "anticipation": 93.3977455716586,
+            "disgust": 51.901565995525736,
+            "fear": 0.0,
+            "joy": 29.82005141388175,
+            "sadness": 61.01382488479262,
+            "surprise": 68.91089108910892,
+            "trust": 82.41563055062167,
+            "positive": 89.97229916897507,
+            "negative": 57.917760279965
+          },
+          "mean_dice": 53.53497689545294
+        }
+      },
+      {
+        "source_index": 6,
+        "problem": "problems with friends",
+        "situation": "Me and my best friend are drifting apart. She never seems to want to hang out anymore.",
+        "emotion_label": {
+          "inferred": "sadness",
+          "reference": "sadness",
+          "correct": true
+        },
+        "generated_sft": {
+          "total_turns": 11,
+          "total_words": 108,
+          "avg_words_per_turn": 9.818181818181818,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.018518518518518517,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 0.027777777777777776,
+            "sadness": 0.0,
+            "surprise": 0.009259259259259259,
+            "trust": 0.037037037037037035,
+            "positive": 0.027777777777777776,
+            "negative": 0.0
+          },
+          "top_matched_words": [
+            [
+              "friend",
+              1
+            ],
+            [
+              "time",
+              1
+            ],
+            [
+              "true",
+              1
+            ],
+            [
+              "good",
+              1
+            ],
+            [
+              "advice",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 11,
+          "total_words": 205,
+          "avg_words_per_turn": 18.636363636363637,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.024390243902439025,
+            "disgust": 0.0,
+            "fear": 0.00975609756097561,
+            "joy": 0.03414634146341464,
+            "sadness": 0.00975609756097561,
+            "surprise": 0.014634146341463415,
+            "trust": 0.03414634146341464,
+            "positive": 0.03902439024390244,
+            "negative": 0.014634146341463415
+          },
+          "top_matched_words": [
+            [
+              "friend",
+              4
+            ],
+            [
+              "excuse",
+              1
+            ],
+            [
+              "pandemic",
+              1
+            ],
+            [
+              "grant",
+              1
+            ],
+            [
+              "time",
+              1
+            ],
+            [
+              "good",
+              1
+            ],
+            [
+              "talk",
+              1
+            ],
+            [
+              "break",
+              1
+            ],
+            [
+              "worry",
+              1
+            ],
+            [
+              "friendship",
+              1
+            ],
+            [
+              "happen",
+              1
+            ],
+            [
+              "guess",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 100.0,
+            "anticipation": 86.3157894736842,
+            "disgust": 100.0,
+            "fear": 0.0,
+            "joy": 89.71553610503281,
+            "sadness": 0.0,
+            "surprise": 77.50472589792061,
+            "trust": 95.93908629441626,
+            "positive": 83.16430020283975,
+            "negative": 0.0
+          },
+          "mean_dice": 63.263943797389366
+        }
+      },
+      {
+        "source_index": 189,
+        "problem": "problems with friends",
+        "situation": "My friends got me banned from PlayStation because I got a girlfriend.",
+        "emotion_label": {
+          "inferred": "shame",
+          "reference": "anger",
+          "correct": false
+        },
+        "generated_sft": {
+          "total_turns": 10,
+          "total_words": 58,
+          "avg_words_per_turn": 5.8,
+          "freqs": {
+            "anger": 0.017241379310344827,
+            "anticipation": 0.05172413793103448,
+            "disgust": 0.017241379310344827,
+            "fear": 0.017241379310344827,
+            "joy": 0.06896551724137931,
+            "sadness": 0.017241379310344827,
+            "surprise": 0.034482758620689655,
+            "trust": 0.06896551724137931,
+            "positive": 0.06896551724137931,
+            "negative": 0.017241379310344827
+          },
+          "top_matched_words": [
+            [
+              "good",
+              2
+            ],
+            [
+              "pretty",
+              1
+            ],
+            [
+              "friend",
+              1
+            ],
+            [
+              "mad",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 52,
+          "total_words": 551,
+          "avg_words_per_turn": 10.596153846153847,
+          "freqs": {
+            "anger": 0.030852994555353903,
+            "anticipation": 0.014519056261343012,
+            "disgust": 0.029038112522686024,
+            "fear": 0.029038112522686024,
+            "joy": 0.029038112522686024,
+            "sadness": 0.025408348457350273,
+            "surprise": 0.016333938294010888,
+            "trust": 0.032667876588021776,
+            "positive": 0.036297640653357534,
+            "negative": 0.056261343012704176
+          },
+          "top_matched_words": [
+            [
+              "friend",
+              6
+            ],
+            [
+              "kind",
+              4
+            ],
+            [
+              "mad",
+              3
+            ],
+            [
+              "ban",
+              3
+            ],
+            [
+              "start",
+              2
+            ],
+            [
+              "bad",
+              2
+            ],
+            [
+              "jerk",
+              2
+            ],
+            [
+              "warning",
+              2
+            ],
+            [
+              "worth",
+              2
+            ],
+            [
+              "good",
+              2
+            ],
+            [
+              "harass",
+              1
+            ],
+            [
+              "threaten",
+              1
+            ],
+            [
+              "kick",
+              1
+            ],
+            [
+              "trash",
+              1
+            ],
+            [
+              "love",
+              1
+            ],
+            [
+              "thought",
+              1
+            ],
+            [
+              "ruin",
+              1
+            ],
+            [
+              "rest",
+              1
+            ],
+            [
+              "avoid",
+              1
+            ],
+            [
+              "hospital",
+              1
+            ],
+            [
+              "contamination",
+              1
+            ],
+            [
+              "talk",
+              1
+            ],
+            [
+              "weird",
+              1
+            ],
+            [
+              "annoying",
+              1
+            ],
+            [
+              "moron",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 71.69811320754717,
+            "anticipation": 43.83561643835616,
+            "disgust": 74.50980392156863,
+            "fear": 74.50980392156863,
+            "joy": 59.25925925925925,
+            "sadness": 80.85106382978722,
+            "surprise": 64.28571428571428,
+            "trust": 64.28571428571428,
+            "positive": 68.96551724137932,
+            "negative": 46.91358024691358
+          },
+          "mean_dice": 64.91141866378085
+        }
+      },
+      {
+        "source_index": 70,
+        "problem": "job crisis",
+        "situation": "I'm a therapist and I'm getting burned out on the job.",
+        "emotion_label": {
+          "inferred": "anxiety",
+          "reference": "anxiety",
+          "correct": true
+        },
+        "generated_sft": {
+          "total_turns": 10,
+          "total_words": 49,
+          "avg_words_per_turn": 4.9,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.02040816326530612,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 0.0,
+            "sadness": 0.0,
+            "surprise": 0.02040816326530612,
+            "trust": 0.0,
+            "positive": 0.02040816326530612,
+            "negative": 0.02040816326530612
+          },
+          "top_matched_words": [
+            [
+              "tired",
+              1
+            ],
+            [
+              "patient",
+              1
+            ],
+            [
+              "break",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 14,
+          "total_words": 321,
+          "avg_words_per_turn": 22.928571428571427,
+          "freqs": {
+            "anger": 0.012461059190031152,
+            "anticipation": 0.04984423676012461,
+            "disgust": 0.006230529595015576,
+            "fear": 0.021806853582554516,
+            "joy": 0.040498442367601244,
+            "sadness": 0.021806853582554516,
+            "surprise": 0.018691588785046728,
+            "trust": 0.04361370716510903,
+            "positive": 0.08722741433021806,
+            "negative": 0.018691588785046728
+          },
+          "top_matched_words": [
+            [
+              "job",
+              4
+            ],
+            [
+              "young",
+              2
+            ],
+            [
+              "good",
+              2
+            ],
+            [
+              "patient",
+              2
+            ],
+            [
+              "worry",
+              2
+            ],
+            [
+              "fun",
+              2
+            ],
+            [
+              "honest",
+              1
+            ],
+            [
+              "thought",
+              1
+            ],
+            [
+              "school",
+              1
+            ],
+            [
+              "complain",
+              1
+            ],
+            [
+              "problem",
+              1
+            ],
+            [
+              "career",
+              1
+            ],
+            [
+              "pretty",
+              1
+            ],
+            [
+              "gray",
+              1
+            ],
+            [
+              "love",
+              1
+            ],
+            [
+              "abandon",
+              1
+            ],
+            [
+              "true",
+              1
+            ],
+            [
+              "committed",
+              1
+            ],
+            [
+              "profession",
+              1
+            ],
+            [
+              "money",
+              1
+            ],
+            [
+              "provide",
+              1
+            ],
+            [
+              "vacation",
+              1
+            ],
+            [
+              "guess",
+              1
+            ],
+            [
+              "defense",
+              1
+            ],
+            [
+              "cop",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 0.0,
+            "anticipation": 58.09954751131221,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 0.0,
+            "sadness": 0.0,
+            "surprise": 95.60975609756098,
+            "trust": 0.0,
+            "positive": 37.92085056113408,
+            "negative": 95.60975609756098
+          },
+          "mean_dice": 28.723991026756824
+        }
+      },
+      {
+        "source_index": 62,
+        "problem": "breakup with partner",
+        "situation": "I was dating this guy for about a month or so, and everything had been going well. It was my first relationship in a long time. All of a sudden, he ghosted me. No explanation. I was left thinking that I'm not built to be in a relationship.",
+        "emotion_label": {
+          "inferred": "shame",
+          "reference": "sadness",
+          "correct": false
+        },
+        "generated_sft": {
+          "total_turns": 10,
+          "total_words": 79,
+          "avg_words_per_turn": 7.9,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.02531645569620253,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 0.02531645569620253,
+            "sadness": 0.012658227848101266,
+            "surprise": 0.012658227848101266,
+            "trust": 0.02531645569620253,
+            "positive": 0.05063291139240506,
+            "negative": 0.012658227848101266
+          },
+          "top_matched_words": [
+            [
+              "deal",
+              1
+            ],
+            [
+              "breakup",
+              1
+            ],
+            [
+              "pretty",
+              1
+            ],
+            [
+              "focus",
+              1
+            ],
+            [
+              "reading",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 14,
+          "total_words": 194,
+          "avg_words_per_turn": 13.857142857142858,
+          "freqs": {
+            "anger": 0.005154639175257732,
+            "anticipation": 0.030927835051546393,
+            "disgust": 0.005154639175257732,
+            "fear": 0.015463917525773196,
+            "joy": 0.020618556701030927,
+            "sadness": 0.015463917525773196,
+            "surprise": 0.005154639175257732,
+            "trust": 0.020618556701030927,
+            "positive": 0.03608247422680412,
+            "negative": 0.020618556701030927
+          },
+          "top_matched_words": [
+            [
+              "time",
+              2
+            ],
+            [
+              "contact",
+              2
+            ],
+            [
+              "true",
+              2
+            ],
+            [
+              "stupid",
+              1
+            ],
+            [
+              "reason",
+              1
+            ],
+            [
+              "problem",
+              1
+            ],
+            [
+              "perfect",
+              1
+            ],
+            [
+              "thought",
+              1
+            ],
+            [
+              "lonely",
+              1
+            ],
+            [
+              "pandemic",
+              1
+            ],
+            [
+              "happen",
+              1
+            ],
+            [
+              "good",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 0.0,
+            "anticipation": 90.02320185614849,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 89.77272727272727,
+            "sadness": 90.02320185614849,
+            "surprise": 57.87545787545787,
+            "trust": 89.77272727272727,
+            "positive": 83.22046651617757,
+            "negative": 76.07843137254902
+          },
+          "mean_dice": 57.6766214021936
+        }
+      },
+      {
+        "source_index": 57,
+        "problem": "job crisis",
+        "situation": "Pretty down with the lack of securing a job and improving my finaces.",
+        "emotion_label": {
+          "inferred": "sadness",
+          "reference": "depression",
+          "correct": false
+        },
+        "generated_sft": {
+          "total_turns": 9,
+          "total_words": 70,
+          "avg_words_per_turn": 7.777777777777778,
+          "freqs": {
+            "anger": 0.014285714285714285,
+            "anticipation": 0.05714285714285714,
+            "disgust": 0.0,
+            "fear": 0.014285714285714285,
+            "joy": 0.02857142857142857,
+            "sadness": 0.014285714285714285,
+            "surprise": 0.014285714285714285,
+            "trust": 0.04285714285714286,
+            "positive": 0.07142857142857142,
+            "negative": 0.014285714285714285
+          },
+          "top_matched_words": [
+            [
+              "start",
+              2
+            ],
+            [
+              "pretty",
+              1
+            ],
+            [
+              "job",
+              1
+            ],
+            [
+              "offer",
+              1
+            ],
+            [
+              "nurse",
+              1
+            ],
+            [
+              "depressed",
+              1
+            ],
+            [
+              "good",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 16,
+          "total_words": 166,
+          "avg_words_per_turn": 10.375,
+          "freqs": {
+            "anger": 0.006024096385542169,
+            "anticipation": 0.018072289156626505,
+            "disgust": 0.0,
+            "fear": 0.012048192771084338,
+            "joy": 0.012048192771084338,
+            "sadness": 0.012048192771084338,
+            "surprise": 0.006024096385542169,
+            "trust": 0.018072289156626505,
+            "positive": 0.04819277108433735,
+            "negative": 0.018072289156626505
+          },
+          "top_matched_words": [
+            [
+              "job",
+              3
+            ],
+            [
+              "worry",
+              1
+            ],
+            [
+              "depressed",
+              1
+            ],
+            [
+              "refuse",
+              1
+            ],
+            [
+              "afford",
+              1
+            ],
+            [
+              "happen",
+              1
+            ],
+            [
+              "kind",
+              1
+            ],
+            [
+              "word",
+              1
+            ],
+            [
+              "good",
+              1
+            ],
+            [
+              "talk",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 59.322033898305094,
+            "anticipation": 48.05491990846682,
+            "disgust": 100.0,
+            "fear": 91.50326797385621,
+            "joy": 59.322033898305094,
+            "sadness": 91.50326797385621,
+            "surprise": 59.322033898305094,
+            "trust": 59.32203389830508,
+            "positive": 80.57553956834533,
+            "negative": 88.29787234042553
+          },
+          "mean_dice": 73.72230033581704
+        }
+      },
+      {
+        "source_index": 35,
+        "problem": "problems with friends",
+        "situation": "i'm very sad because my friend doesn't want to talk with me",
+        "emotion_label": {
+          "inferred": "sadness",
+          "reference": "sadness",
+          "correct": true
+        },
+        "generated_sft": {
+          "total_turns": 13,
+          "total_words": 70,
+          "avg_words_per_turn": 5.384615384615385,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.0,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 0.014285714285714285,
+            "sadness": 0.0,
+            "surprise": 0.0,
+            "trust": 0.014285714285714285,
+            "positive": 0.04285714285714286,
+            "negative": 0.0
+          },
+          "top_matched_words": [
+            [
+              "talk",
+              2
+            ],
+            [
+              "friend",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 11,
+          "total_words": 108,
+          "avg_words_per_turn": 9.818181818181818,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.027777777777777776,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 0.046296296296296294,
+            "sadness": 0.0,
+            "surprise": 0.018518518518518517,
+            "trust": 0.06481481481481481,
+            "positive": 0.046296296296296294,
+            "negative": 0.009259259259259259
+          },
+          "top_matched_words": [
+            [
+              "friend",
+              3
+            ],
+            [
+              "good",
+              2
+            ],
+            [
+              "advice",
+              2
+            ],
+            [
+              "ignore",
+              1
+            ],
+            [
+              "bye",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 100.0,
+            "anticipation": 0.0,
+            "disgust": 100.0,
+            "fear": 100.0,
+            "joy": 47.16157205240175,
+            "sadness": 100.0,
+            "surprise": 0.0,
+            "trust": 36.12040133779264,
+            "positive": 96.14243323442136,
+            "negative": 0.0
+          },
+          "mean_dice": 57.94244066246158
+        }
+      },
+      {
+        "source_index": 188,
+        "problem": "problems with friends",
+        "situation": "Had a fight with friend.",
+        "emotion_label": {
+          "inferred": "sadness",
+          "reference": "sadness",
+          "correct": true
+        },
+        "generated_sft": {
+          "total_turns": 9,
+          "total_words": 71,
+          "avg_words_per_turn": 7.888888888888889,
+          "freqs": {
+            "anger": 0.028169014084507043,
+            "anticipation": 0.014084507042253521,
+            "disgust": 0.014084507042253521,
+            "fear": 0.028169014084507043,
+            "joy": 0.04225352112676056,
+            "sadness": 0.014084507042253521,
+            "surprise": 0.014084507042253521,
+            "trust": 0.04225352112676056,
+            "positive": 0.056338028169014086,
+            "negative": 0.028169014084507043
+          },
+          "top_matched_words": [
+            [
+              "fight",
+              1
+            ],
+            [
+              "friend",
+              1
+            ],
+            [
+              "deal",
+              1
+            ],
+            [
+              "mad",
+              1
+            ],
+            [
+              "talk",
+              1
+            ],
+            [
+              "true",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 13,
+          "total_words": 151,
+          "avg_words_per_turn": 11.615384615384615,
+          "freqs": {
+            "anger": 0.026490066225165563,
+            "anticipation": 0.059602649006622516,
+            "disgust": 0.006622516556291391,
+            "fear": 0.019867549668874173,
+            "joy": 0.046357615894039736,
+            "sadness": 0.013245033112582781,
+            "surprise": 0.019867549668874173,
+            "trust": 0.033112582781456956,
+            "positive": 0.059602649006622516,
+            "negative": 0.052980132450331126
+          },
+          "top_matched_words": [
+            [
+              "fight",
+              2
+            ],
+            [
+              "friend",
+              2
+            ],
+            [
+              "excuse",
+              2
+            ],
+            [
+              "ready",
+              2
+            ],
+            [
+              "good",
+              1
+            ],
+            [
+              "shopping",
+              1
+            ],
+            [
+              "upset",
+              1
+            ],
+            [
+              "create",
+              1
+            ],
+            [
+              "angry",
+              1
+            ],
+            [
+              "time",
+              1
+            ],
+            [
+              "childhood",
+              1
+            ],
+            [
+              "reason",
+              1
+            ],
+            [
+              "wait",
+              1
+            ],
+            [
+              "talk",
+              1
+            ],
+            [
+              "hope",
+              1
+            ],
+            [
+              "thought",
+              1
+            ],
+            [
+              "problem",
+              1
+            ],
+            [
+              "bye",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 96.9283276450512,
+            "anticipation": 38.22784810126583,
+            "disgust": 63.96396396396396,
+            "fear": 82.71844660194175,
+            "joy": 95.36842105263158,
+            "sadness": 96.9283276450512,
+            "surprise": 82.96703296703298,
+            "trust": 87.87128712871286,
+            "positive": 97.18423169750604,
+            "negative": 69.42528735632185
+          },
+          "mean_dice": 81.15831741594792
+        }
+      },
+      {
+        "source_index": 26,
+        "problem": "academic pressure",
+        "situation": "I had five finals to complete and there wasn't much time to study for them. So, I was afraid I'd fail all of them.",
+        "emotion_label": {
+          "inferred": "fear",
+          "reference": "anxiety",
+          "correct": false
+        },
+        "generated_sft": {
+          "total_turns": 13,
+          "total_words": 76,
+          "avg_words_per_turn": 5.846153846153846,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.039473684210526314,
+            "disgust": 0.0,
+            "fear": 0.02631578947368421,
+            "joy": 0.02631578947368421,
+            "sadness": 0.0,
+            "surprise": 0.013157894736842105,
+            "trust": 0.039473684210526314,
+            "positive": 0.06578947368421052,
+            "negative": 0.02631578947368421
+          },
+          "top_matched_words": [
+            [
+              "good",
+              1
+            ],
+            [
+              "afraid",
+              1
+            ],
+            [
+              "study",
+              1
+            ],
+            [
+              "anxious",
+              1
+            ],
+            [
+              "glad",
+              1
+            ],
+            [
+              "school",
+              1
+            ],
+            [
+              "visit",
+              1
+            ],
+            [
+              "brother",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 15,
+          "total_words": 115,
+          "avg_words_per_turn": 7.666666666666667,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.05217391304347826,
+            "disgust": 0.0,
+            "fear": 0.008695652173913044,
+            "joy": 0.06956521739130435,
+            "sadness": 0.0,
+            "surprise": 0.034782608695652174,
+            "trust": 0.06086956521739131,
+            "positive": 0.08695652173913043,
+            "negative": 0.0
+          },
+          "top_matched_words": [
+            [
+              "good",
+              3
+            ],
+            [
+              "pretty",
+              2
+            ],
+            [
+              "safe",
+              2
+            ],
+            [
+              "agree",
+              2
+            ],
+            [
+              "difficult",
+              1
+            ],
+            [
+              "holiday",
+              1
+            ],
+            [
+              "break",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 100.0,
+            "anticipation": 86.14232209737828,
+            "disgust": 100.0,
+            "fear": 49.67320261437909,
+            "joy": 54.8926014319809,
+            "sadness": 100.0,
+            "surprise": 54.8926014319809,
+            "trust": 78.67730900798176,
+            "positive": 86.14232209737828,
+            "negative": 0.0
+          },
+          "mean_dice": 71.04203586810793
+        }
+      },
+      {
+        "source_index": 173,
+        "problem": "ongoing depression",
+        "situation": "Have been stuck at home due to illness and am growing tired of it.",
+        "emotion_label": {
+          "inferred": "sadness",
+          "reference": "depression",
+          "correct": false
+        },
+        "generated_sft": {
+          "total_turns": 12,
+          "total_words": 99,
+          "avg_words_per_turn": 8.25,
+          "freqs": {
+            "anger": 0.010101010101010102,
+            "anticipation": 0.050505050505050504,
+            "disgust": 0.0,
+            "fear": 0.050505050505050504,
+            "joy": 0.020202020202020204,
+            "sadness": 0.030303030303030304,
+            "surprise": 0.010101010101010102,
+            "trust": 0.020202020202020204,
+            "positive": 0.04040404040404041,
+            "negative": 0.030303030303030304
+          },
+          "top_matched_words": [
+            [
+              "watch",
+              2
+            ],
+            [
+              "depressed",
+              1
+            ],
+            [
+              "illness",
+              1
+            ],
+            [
+              "wait",
+              1
+            ],
+            [
+              "solution",
+              1
+            ],
+            [
+              "romance",
+              1
+            ],
+            [
+              "romantic",
+              1
+            ],
+            [
+              "action",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 13,
+          "total_words": 210,
+          "avg_words_per_turn": 16.153846153846153,
+          "freqs": {
+            "anger": 0.03333333333333333,
+            "anticipation": 0.01904761904761905,
+            "disgust": 0.023809523809523808,
+            "fear": 0.01904761904761905,
+            "joy": 0.009523809523809525,
+            "sadness": 0.023809523809523808,
+            "surprise": 0.014285714285714285,
+            "trust": 0.009523809523809525,
+            "positive": 0.014285714285714285,
+            "negative": 0.0761904761904762
+          },
+          "top_matched_words": [
+            [
+              "cold",
+              4
+            ],
+            [
+              "storm",
+              3
+            ],
+            [
+              "bad",
+              2
+            ],
+            [
+              "good",
+              1
+            ],
+            [
+              "wait",
+              1
+            ],
+            [
+              "leave",
+              1
+            ],
+            [
+              "sick",
+              1
+            ],
+            [
+              "gross",
+              1
+            ],
+            [
+              "prepare",
+              1
+            ],
+            [
+              "hit",
+              1
+            ],
+            [
+              "pretty",
+              1
+            ],
+            [
+              "change",
+              1
+            ],
+            [
+              "crazy",
+              1
+            ],
+            [
+              "sudden",
+              1
+            ],
+            [
+              "mess",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 46.51162790697674,
+            "anticipation": 54.77178423236514,
+            "disgust": 0.0,
+            "fear": 54.77178423236514,
+            "joy": 64.07766990291263,
+            "sadness": 88.0,
+            "surprise": 82.84023668639054,
+            "trust": 64.07766990291263,
+            "positive": 52.24274406332453,
+            "negative": 56.91056910569105
+          },
+          "mean_dice": 56.42040860329384
+        }
+      },
+      {
+        "source_index": 139,
+        "problem": "Sleep Problems",
+        "situation": "I've had trouble sleeping the last few nights, I feel really low self esteem.",
+        "emotion_label": {
+          "inferred": "sadness",
+          "reference": "sadness",
+          "correct": true
+        },
+        "generated_sft": {
+          "total_turns": 9,
+          "total_words": 70,
+          "avg_words_per_turn": 7.777777777777778,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.014285714285714285,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 0.04285714285714286,
+            "sadness": 0.014285714285714285,
+            "surprise": 0.014285714285714285,
+            "trust": 0.08571428571428572,
+            "positive": 0.05714285714285714,
+            "negative": 0.0
+          },
+          "top_matched_words": [
+            [
+              "advice",
+              2
+            ],
+            [
+              "esteem",
+              1
+            ],
+            [
+              "kind",
+              1
+            ],
+            [
+              "routine",
+              1
+            ],
+            [
+              "good",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 17,
+          "total_words": 496,
+          "avg_words_per_turn": 29.176470588235293,
+          "freqs": {
+            "anger": 0.016129032258064516,
+            "anticipation": 0.020161290322580645,
+            "disgust": 0.004032258064516129,
+            "fear": 0.02620967741935484,
+            "joy": 0.024193548387096774,
+            "sadness": 0.03024193548387097,
+            "surprise": 0.014112903225806451,
+            "trust": 0.034274193548387094,
+            "positive": 0.04838709677419355,
+            "negative": 0.04032258064516129
+          },
+          "top_matched_words": [
+            [
+              "job",
+              4
+            ],
+            [
+              "pandemic",
+              3
+            ],
+            [
+              "succeed",
+              2
+            ],
+            [
+              "fire",
+              2
+            ],
+            [
+              "doubt",
+              2
+            ],
+            [
+              "charity",
+              2
+            ],
+            [
+              "sadly",
+              2
+            ],
+            [
+              "fear",
+              2
+            ],
+            [
+              "terrible",
+              1
+            ],
+            [
+              "believing",
+              1
+            ],
+            [
+              "ability",
+              1
+            ],
+            [
+              "worth",
+              1
+            ],
+            [
+              "successful",
+              1
+            ],
+            [
+              "long",
+              1
+            ],
+            [
+              "hire",
+              1
+            ],
+            [
+              "afford",
+              1
+            ],
+            [
+              "fact",
+              1
+            ],
+            [
+              "stable",
+              1
+            ],
+            [
+              "suffer",
+              1
+            ],
+            [
+              "minimum",
+              1
+            ],
+            [
+              "hobby",
+              1
+            ],
+            [
+              "kind",
+              1
+            ],
+            [
+              "struggle",
+              1
+            ],
+            [
+              "break",
+              1
+            ],
+            [
+              "proper",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 0.0,
+            "anticipation": 82.94314381270902,
+            "disgust": 0.0,
+            "fear": 0.0,
+            "joy": 72.16494845360826,
+            "sadness": 64.16558861578267,
+            "surprise": 99.39148073022312,
+            "trust": 57.129140662505996,
+            "positive": 91.70305676855894,
+            "negative": 0.0
+          },
+          "mean_dice": 46.749735904338806
+        }
+      },
+      {
+        "source_index": 22,
+        "problem": "ongoing depression",
+        "situation": "I am depressed because I broke up with my girlfriend",
+        "emotion_label": {
+          "inferred": "sadness",
+          "reference": "depression",
+          "correct": false
+        },
+        "generated_sft": {
+          "total_turns": 9,
+          "total_words": 74,
+          "avg_words_per_turn": 8.222222222222221,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.013513513513513514,
+            "disgust": 0.0,
+            "fear": 0.013513513513513514,
+            "joy": 0.013513513513513514,
+            "sadness": 0.013513513513513514,
+            "surprise": 0.013513513513513514,
+            "trust": 0.013513513513513514,
+            "positive": 0.02702702702702703,
+            "negative": 0.013513513513513514
+          },
+          "top_matched_words": [
+            [
+              "depress",
+              1
+            ],
+            [
+              "break",
+              1
+            ],
+            [
+              "pay",
+              1
+            ],
+            [
+              "attention",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 30,
+          "total_words": 230,
+          "avg_words_per_turn": 7.666666666666667,
+          "freqs": {
+            "anger": 0.008695652173913044,
+            "anticipation": 0.05217391304347826,
+            "disgust": 0.004347826086956522,
+            "fear": 0.021739130434782608,
+            "joy": 0.02608695652173913,
+            "sadness": 0.008695652173913044,
+            "surprise": 0.017391304347826087,
+            "trust": 0.0391304347826087,
+            "positive": 0.04782608695652174,
+            "negative": 0.013043478260869565
+          },
+          "top_matched_words": [
+            [
+              "long",
+              3
+            ],
+            [
+              "time",
+              3
+            ],
+            [
+              "break",
+              2
+            ],
+            [
+              "talk",
+              2
+            ],
+            [
+              "brother",
+              2
+            ],
+            [
+              "advice",
+              2
+            ],
+            [
+              "depressed",
+              1
+            ],
+            [
+              "wit",
+              1
+            ],
+            [
+              "quarantine",
+              1
+            ],
+            [
+              "personal",
+              1
+            ],
+            [
+              "friend",
+              1
+            ],
+            [
+              "happy",
+              1
+            ],
+            [
+              "swim",
+              1
+            ],
+            [
+              "ready",
+              1
+            ],
+            [
+              "wait",
+              1
+            ],
+            [
+              "true",
+              1
+            ],
+            [
+              "young",
+              1
+            ],
+            [
+              "marry",
+              1
+            ],
+            [
+              "bad",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 0.0,
+            "anticipation": 41.14490161001789,
+            "disgust": 0.0,
+            "fear": 76.66666666666667,
+            "joy": 68.24925816023739,
+            "sadness": 78.30687830687832,
+            "surprise": 87.45247148288973,
+            "trust": 51.33928571428571,
+            "positive": 72.21350078492935,
+            "negative": 98.2300884955752
+          },
+          "mean_dice": 57.360305122148034
+        }
+      },
+      {
+        "source_index": 151,
+        "problem": "breakup with partner",
+        "situation": "there are me and my friend open some new company in my village. the company is run by one year than start the problem in partner ship. he is lie to me the account is not clear in every field so i will very anxiety with my partner",
+        "emotion_label": {
+          "inferred": "anxiety",
+          "reference": "anxiety",
+          "correct": true
+        },
+        "generated_sft": {
+          "total_turns": 9,
+          "total_words": 27,
+          "avg_words_per_turn": 3.0,
+          "freqs": {
+            "anger": 0.037037037037037035,
+            "anticipation": 0.037037037037037035,
+            "disgust": 0.037037037037037035,
+            "fear": 0.0,
+            "joy": 0.037037037037037035,
+            "sadness": 0.037037037037037035,
+            "surprise": 0.037037037037037035,
+            "trust": 0.07407407407407407,
+            "positive": 0.1111111111111111,
+            "negative": 0.037037037037037035
+          },
+          "top_matched_words": [
+            [
+              "good",
+              1
+            ],
+            [
+              "partner",
+              1
+            ],
+            [
+              "lie",
+              1
+            ],
+            [
+              "account",
+              1
+            ],
+            [
+              "talk",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 11,
+          "total_words": 68,
+          "avg_words_per_turn": 6.181818181818182,
+          "freqs": {
+            "anger": 0.029411764705882353,
+            "anticipation": 0.029411764705882353,
+            "disgust": 0.014705882352941176,
+            "fear": 0.0,
+            "joy": 0.014705882352941176,
+            "sadness": 0.0,
+            "surprise": 0.014705882352941176,
+            "trust": 0.058823529411764705,
+            "positive": 0.04411764705882353,
+            "negative": 0.014705882352941176
+          },
+          "top_matched_words": [
+            [
+              "partner",
+              2
+            ],
+            [
+              "account",
+              2
+            ],
+            [
+              "cheat",
+              1
+            ],
+            [
+              "money",
+              1
+            ],
+            [
+              "time",
+              1
+            ],
+            [
+              "advice",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 88.52459016393442,
+            "anticipation": 88.52459016393442,
+            "disgust": 56.84210526315789,
+            "fear": 100.0,
+            "joy": 56.84210526315789,
+            "sadness": 0.0,
+            "surprise": 56.84210526315789,
+            "trust": 88.52459016393442,
+            "positive": 56.84210526315789,
+            "negative": 56.84210526315789
+          },
+          "mean_dice": 64.97842968075926
+        }
+      },
+      {
+        "source_index": 108,
+        "problem": "problems with friends",
+        "situation": "One of my best friends I lived with moved out and screwed us over with the lease and her rent the DAY BEFORE rent was due and then blocked us on everything so that we couldn't ask her to  pay.",
+        "emotion_label": {
+          "inferred": "anger",
+          "reference": "anger",
+          "correct": true
+        },
+        "generated_sft": {
+          "total_turns": 10,
+          "total_words": 126,
+          "avg_words_per_turn": 12.6,
+          "freqs": {
+            "anger": 0.0,
+            "anticipation": 0.015873015873015872,
+            "disgust": 0.0,
+            "fear": 0.007936507936507936,
+            "joy": 0.031746031746031744,
+            "sadness": 0.023809523809523808,
+            "surprise": 0.015873015873015872,
+            "trust": 0.031746031746031744,
+            "positive": 0.03968253968253968,
+            "negative": 0.031746031746031744
+          },
+          "top_matched_words": [
+            [
+              "friend",
+              2
+            ],
+            [
+              "pay",
+              2
+            ],
+            [
+              "guess",
+              1
+            ],
+            [
+              "problem",
+              1
+            ],
+            [
+              "contact",
+              1
+            ],
+            [
+              "refuse",
+              1
+            ],
+            [
+              "leave",
+              1
+            ],
+            [
+              "evict",
+              1
+            ]
+          ]
+        },
+        "human_reference": {
+          "total_turns": 13,
+          "total_words": 205,
+          "avg_words_per_turn": 15.76923076923077,
+          "freqs": {
+            "anger": 0.014634146341463415,
+            "anticipation": 0.04390243902439024,
+            "disgust": 0.014634146341463415,
+            "fear": 0.004878048780487805,
+            "joy": 0.06829268292682927,
+            "sadness": 0.03414634146341464,
+            "surprise": 0.02926829268292683,
+            "trust": 0.05365853658536585,
+            "positive": 0.07317073170731707,
+            "negative": 0.024390243902439025
+          },
+          "top_matched_words": [
+            [
+              "friend",
+              3
+            ],
+            [
+              "frustrate",
+              2
+            ],
+            [
+              "closure",
+              2
+            ],
+            [
+              "good",
+              2
+            ],
+            [
+              "pay",
+              1
+            ],
+            [
+              "pretty",
+              1
+            ],
+            [
+              "guess",
+              1
+            ],
+            [
+              "leave",
+              1
+            ],
+            [
+              "true",
+              1
+            ],
+            [
+              "negative",
+              1
+            ],
+            [
+              "feeling",
+              1
+            ],
+            [
+              "long",
+              1
+            ],
+            [
+              "focus",
+              1
+            ],
+            [
+              "joy",
+              1
+            ],
+            [
+              "compliment",
+              1
+            ],
+            [
+              "helpful",
+              1
+            ]
+          ]
+        },
+        "nrc": {
+          "per_category_dice": {
+            "anger": 0.0,
+            "anticipation": 53.10880829015544,
+            "disgust": 0.0,
+            "fear": 76.13293051359517,
+            "joy": 63.46749226006191,
+            "sadness": 82.16432865731463,
+            "surprise": 70.32590051457976,
+            "trust": 74.3427017225748,
+            "positive": 70.32590051457976,
+            "negative": 86.89655172413794
+          },
+          "mean_dice": 57.67646141969995
+        }
+      }
+    ]
   }
 }
